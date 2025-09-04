@@ -29,7 +29,7 @@ const ExamSummary: React.FC = () => {
   if (errors.getExamSummary || !Array.isArray(examSummary)) {
     return (
       <ExamError
-        description={errors.getExamSummary}
+        description={errors.getExamSummary || undefined}
         onReload={getExamSummary}
       />
     );
