@@ -116,15 +116,12 @@ const FeeSubmissions = () => {
         <Tabs defaultValue="course" className="w-full">
           <TabsList className="grid w-full h-10 flex gap-2 w-max">
             <TabsTrigger value="course" className="h-full">
-              <FileTextIcon className="w-4 h-4 mr-2" />
               Course Fees
             </TabsTrigger>
             <TabsTrigger value="hostel" className="h-full">
-              <HomeIcon className="w-4 h-4 mr-2" />
               Hostel Fees
             </TabsTrigger>
             <TabsTrigger value="receipts" className="h-full">
-              <WalletIcon className="w-4 h-4 mr-2" />
               Receipts Fees
             </TabsTrigger>
           </TabsList>

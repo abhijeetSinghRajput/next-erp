@@ -37,12 +37,10 @@ const ProfileDialog = () => {
         >
           {avatarBlobUrl && (
             <div className="relative w-full h-[70svh]">
-              <Image
+              <img
                 src={avatarBlobUrl}
                 alt={student?.StudentName || "student profile"}
-                fill
                 className="object-contain rounded-3xl"
-                unoptimized
               />
             </div>
           )}

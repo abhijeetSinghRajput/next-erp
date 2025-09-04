@@ -3,6 +3,7 @@ import { toast } from "sonner";
 import { create } from "zustand";
 
 export interface Circular {
+    EmployeeName: unknown;
     CirID: number;
     Subject: string;
     Notice: string;

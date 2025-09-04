@@ -129,7 +129,7 @@ const CircularDetailsDrawer: React.FC = () => {
                 <Button size="" variant="secondary" className={""}>View All Notices</Button>
             </DrawerTrigger>
             <DrawerContent className="h-[90vh]">
-                <ScrollArea className={""}>
+                <ScrollArea className={"overflow-y-auto"}>
                     <div className="max-w-screen-lg mx-auto p-6">
                         <DrawerHeader className={""}>
                             <DrawerTitle className="text-2xl">
@@ -206,7 +206,7 @@ const CircularDetailsDrawer: React.FC = () => {
                                                     <div className="text-sm flex gap-2 flex-wrap text-muted-foreground">
                                                         <span>{formatRelativeDate(circular.DateFrom)}</span>
                                                         <Badge variant="secondary" className={undefined}>
-                                                            {circular.ByDepartment}
+                                                            {circular.EmployeeName}
                                                         </Badge>
                                                         {circular.DateTo && (
                                                             <Badge variant="border" className={"text-foreground"}>
