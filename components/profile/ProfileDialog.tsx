@@ -36,7 +36,7 @@ const ProfileDialog = () => {
                         maxWidth: "min(100svw, 70svh)",
                     }}
                 >
-                    {avatarBlobUrl ? <img src={avatarBlobUrl} /> : null}
+                    {avatarBlobUrl ? <img src={avatarBlobUrl} alt={student?.StudentName || "student profile"}/> : null}
                 </MorphingDialogContent>
                 <MorphingDialogClose
                     className="fixed right-6 top-6 h-fit w-fit rounded-full bg-white p-1"

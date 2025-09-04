@@ -49,8 +49,8 @@ const NoInternet = () => {
           transition={{ delay: 0.4 }}
           className="text-muted-foreground text-center max-w-[400px]"
         >
-          Oops! It seems you're not connected to the internet. Please check your
-          network connection and try again.
+          Oops! It seems you&apos;re not connected to the internet. Please check
+          your network connection and try again.
         </motion.p>
 
         <motion.div
@@ -58,7 +58,12 @@ const NoInternet = () => {
           animate={{ y: 0, opacity: 1 }}
           transition={{ delay: 0.6 }}
         >
-          <Button onClick={handleRetry} className={undefined} variant={undefined} size={undefined}>
+          <Button
+            onClick={handleRetry}
+            className={undefined}
+            variant={undefined}
+            size={undefined}
+          >
             <RefreshCw />
             Retry Connection
           </Button>
