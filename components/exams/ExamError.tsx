@@ -5,7 +5,13 @@ import { Skeleton } from "../ui/skeleton";
 import { AlertTriangle, RefreshCw } from "lucide-react";
 import { Button } from "../ui/button";
 
-const ExamError = ({ heading = "Exam Summary", onReload, description }) => {
+interface ExamErrorProps {
+  heading?: string;
+  onReload?: () => void;
+  description?: string;
+}
+
+const ExamError = ({ heading = "Exam Summary", onReload, description }: ExamErrorProps) => {
   return (
     <div className="max-w-screen-lg mx-auto p-6 flex justify-center">
       <motion.div
@@ -23,7 +29,7 @@ const ExamError = ({ heading = "Exam Summary", onReload, description }) => {
                 "We couldn't load the attendance records. Please check your connection and try again."}
             </p>
             {onReload && (
-              <Button onClick={onReload} className="mt-4 gap-2">
+              <Button onClick={onReload} className="mt-4 gap-2" variant="default" size="default">
                 <RefreshCw />
                 Retry
               </Button>

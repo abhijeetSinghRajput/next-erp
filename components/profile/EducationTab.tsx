@@ -9,7 +9,6 @@ const textVariants = {
         y: 0,
         transition: {
             duration: 0.6,
-            ease: "easeOut",
         },
     },
 };
@@ -21,7 +20,6 @@ const tabContentVariants = {
         x: 0,
         transition: {
             duration: 0.4,
-            ease: "easeInOut",
         },
     },
     exit: {
@@ -29,7 +27,6 @@ const tabContentVariants = {
         x: -30,
         transition: {
             duration: 0.3,
-            ease: "easeIn",
         },
     },
 };
@@ -60,7 +57,7 @@ const EducationTab = () => {
                                     {student?.["10"]}%
                                 </span>
                             </div>
-                            <Progress value={Number(student?.["10"] ?? 0)} />
+                            <Progress value={Number(student?.["10"] ?? 0)} className={undefined} />
                         </motion.div>
 
                         <motion.div variants={textVariants}>
@@ -72,7 +69,7 @@ const EducationTab = () => {
                                     {student?.["10+2"]}%
                                 </span>
                             </div>
-                            <Progress value={Number(student?.["10+2"] ?? 0)} />
+                            <Progress value={Number(student?.["10+2"] ?? 0)} className={undefined} />
                         </motion.div>
 
                         <motion.div variants={textVariants}>
@@ -84,7 +81,7 @@ const EducationTab = () => {
                                     {student?.Graduation}%
                                 </span>
                             </div>
-                            <Progress value={Number(student?.Graduation ?? 0)} />
+                            <Progress value={Number(student?.Graduation ?? 0)} className={undefined} />
                         </motion.div>
                     </div>
                 </motion.div>
