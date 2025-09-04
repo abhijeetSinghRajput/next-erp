@@ -10,7 +10,13 @@ import {
   CardContent,
 } from "@/components/ui/card";
 import { motion } from "framer-motion";
-import { HomeIcon, FileTextIcon, WalletIcon, AlertCircleIcon, CheckCircleIcon } from "lucide-react";
+import {
+  HomeIcon,
+  FileTextIcon,
+  WalletIcon,
+  AlertCircleIcon,
+  CheckCircleIcon,
+} from "lucide-react";
 
 import FeeSkeleton from "./FeeSkeleton";
 import CourseFee from "./CourseFee";
@@ -33,7 +39,7 @@ const FeeSubmissions = () => {
   useEffect(() => {
     getFeeSubmissions();
     getFeeReceipts();
-  }, []);
+  }, [getFeeSubmissions, getFeeReceipts]);
 
   if (loadingFeeSubmissions) {
     return <FeeSkeleton header={"Fee Submissions"} />;
@@ -50,13 +56,14 @@ const FeeSubmissions = () => {
 
   // Calculate totals
   const calculateTotals = (data: FeeHeadData[] | undefined) => {
-    if (!Array.isArray(data)) return {
-      DueAmount: 0,
-      ReceivedAmount: 0,
-      BalanceAmount: 0,
-      SCAmount: 0,
-      SecurityAdjusted: 0,
-    };
+    if (!Array.isArray(data))
+      return {
+        DueAmount: 0,
+        ReceivedAmount: 0,
+        BalanceAmount: 0,
+        SCAmount: 0,
+        SecurityAdjusted: 0,
+      };
 
     return data.reduce(
       (acc, item) => ({
@@ -239,7 +246,7 @@ const FeeSubmissions = () => {
                   </div>
                 )}
               </div>
-              {(hasHostelFees) && (
+              {hasHostelFees && (
                 <div className="border-t mt-4 pt-4">
                   <div className="flex justify-between text-lg font-bold">
                     <span>Grand Total Paid:</span>
@@ -278,7 +285,7 @@ const FeeSummaryCards: React.FC<FeeSummaryCardsProps> = ({ totals }) => {
   return (
     <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-6">
       {/* Total Fees Card */}
-      <motion.div 
+      <motion.div
         whileHover={{ y: -2 }}
         transition={{ type: "spring", stiffness: 300 }}
       >
@@ -307,7 +314,7 @@ const FeeSummaryCards: React.FC<FeeSummaryCardsProps> = ({ totals }) => {
       </motion.div>
 
       {/* Paid Fees Card */}
-      <motion.div 
+      <motion.div
         whileHover={{ y: -2 }}
         transition={{ type: "spring", stiffness: 300 }}
       >
@@ -320,10 +327,19 @@ const FeeSummaryCards: React.FC<FeeSummaryCardsProps> = ({ totals }) => {
           </CardHeader>
           <CardContent className="">
             <div className="space-y-2">
-              <CardTitle className={`text-2xl font-bold ${isFullyPaid ? 'text-emerald-600' : 'text-amber-600'}`}>
+              <CardTitle
+                className={`text-2xl font-bold ${
+                  isFullyPaid ? "text-emerald-600" : "text-amber-600"
+                }`}
+              >
                 ₹{totals.ReceivedAmount.toLocaleString()}
               </CardTitle>
-              <Progress value={paymentProgress} className={`rounded-full ${isFullyPaid ? 'bg-emerald-500' : 'bg-amber-500'}`}/>
+              <Progress
+                value={paymentProgress}
+                className={`rounded-full ${
+                  isFullyPaid ? "bg-emerald-500" : "bg-amber-500"
+                }`}
+              />
               <p className="text-sm text-muted-foreground">
                 {paymentProgress.toFixed(0)}% of total fees paid
               </p>
@@ -333,7 +349,7 @@ const FeeSummaryCards: React.FC<FeeSummaryCardsProps> = ({ totals }) => {
       </motion.div>
 
       {/* Balance Card */}
-      <motion.div 
+      <motion.div
         whileHover={{ y: -2 }}
         transition={{ type: "spring", stiffness: 300 }}
       >
@@ -341,11 +357,15 @@ const FeeSummaryCards: React.FC<FeeSummaryCardsProps> = ({ totals }) => {
           <CardHeader className="pb-2">
             <CardDescription className="flex items-center gap-2 text-rose-600 dark:text-rose-300">
               <AlertCircleIcon className="w-4 h-4" />
-              {isFullyPaid ? 'Fully Paid' : 'Pending Amount'}
+              {isFullyPaid ? "Fully Paid" : "Pending Amount"}
             </CardDescription>
           </CardHeader>
           <CardContent className="">
-            <CardTitle className={`text-2xl font-bold ${isFullyPaid ? 'text-emerald-600' : 'text-rose-600'}`}>
+            <CardTitle
+              className={`text-2xl font-bold ${
+                isFullyPaid ? "text-emerald-600" : "text-rose-600"
+              }`}
+            >
               {isFullyPaid ? (
                 <span className="flex items-center gap-1">
                   <CheckCircleIcon className="w-5 h-5" />
@@ -357,8 +377,12 @@ const FeeSummaryCards: React.FC<FeeSummaryCardsProps> = ({ totals }) => {
             </CardTitle>
             {totals.SecurityAdjusted > 0 && (
               <div className="mt-2 text-sm">
-                <span className="text-muted-foreground">Security adjusted: </span>
-                <span className="text-emerald-600">₹{totals.SecurityAdjusted.toLocaleString()}</span>
+                <span className="text-muted-foreground">
+                  Security adjusted:{" "}
+                </span>
+                <span className="text-emerald-600">
+                  ₹{totals.SecurityAdjusted.toLocaleString()}
+                </span>
               </div>
             )}
           </CardContent>

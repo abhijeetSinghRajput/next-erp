@@ -153,7 +153,7 @@ const PersonalTab = () => {
                                 variants={textVariants}
                             >
                                 <dt className="w-40 flex-shrink-0 text-sm font-medium text-muted-foreground">
-                                    Father's Name
+                                    Father&apos;s Name
                                 </dt>
                                 <dd className="text-sm">
                                     {student?.FatherHusName}
@@ -165,7 +165,7 @@ const PersonalTab = () => {
                                 variants={textVariants}
                             >
                                 <dt className="w-40 flex-shrink-0 text-sm font-medium text-muted-foreground">
-                                    Father's Mobile
+                                    Father&apos;s Mobile
                                 </dt>
                                 <dd className="text-sm">{student?.FMobileNo}</dd>
                             </motion.div>
@@ -175,7 +175,7 @@ const PersonalTab = () => {
                                 variants={textVariants}
                             >
                                 <dt className="w-40 flex-shrink-0 text-sm font-medium text-muted-foreground">
-                                    Mother's Name
+                                    Mother&apos;s Name
                                 </dt>
                                 <dd className="text-sm">
                                     {student?.MotherName}

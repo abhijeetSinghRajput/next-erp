@@ -1,4 +1,7 @@
-import { AttendanceData, useAttendanceStore } from "@/stores/useAttendanceStore";
+import {
+  AttendanceData,
+  useAttendanceStore,
+} from "@/stores/useAttendanceStore";
 import React, { useEffect, useState, useMemo } from "react";
 import { Calendar } from "@/components/ui/calendar";
 import {
@@ -55,12 +58,16 @@ interface AttendanceCalendarProps {
   data: CalendarData;
 }
 
-const AttendanceCalendar = ({ selectedSubject, data }: AttendanceCalendarProps) => {
+const AttendanceCalendar = ({
+  selectedSubject,
+  data,
+}: AttendanceCalendarProps) => {
   const { getAttendanceBySubject, isLoadingSubjectDetails } =
     useAttendanceStore();
   const [date, setDate] = useState(new Date());
   const [currentMonth, setCurrentMonth] = useState(startOfMonth(new Date()));
-  const [attendanceData, setAttendanceData] = useState<AttendanceResponse | null>(null);
+  const [attendanceData, setAttendanceData] =
+    useState<AttendanceResponse | null>(null);
   const { SubjectID, RegID, PeriodAssignID, TTID, LectureTypeID } =
     selectedSubject;
 
@@ -89,7 +96,9 @@ const AttendanceCalendar = ({ selectedSubject, data }: AttendanceCalendarProps) 
   const fetchAttendance = async () => {
     if (!selectedSubject) return;
 
-    const visibleStart = startOfWeek(startOfMonth(currentMonth), {weekStartsOn: 0,});
+    const visibleStart = startOfWeek(startOfMonth(currentMonth), {
+      weekStartsOn: 0,
+    });
     const visibleEnd = addWeeks(visibleStart, 6);
 
     const payload: AttendanceData = {
@@ -103,7 +112,10 @@ const AttendanceCalendar = ({ selectedSubject, data }: AttendanceCalendarProps) 
     };
 
     try {
-      const result = await getAttendanceBySubject(SubjectID.toString(), payload);
+      const result = await getAttendanceBySubject(
+        SubjectID.toString(),
+        payload
+      );
       setAttendanceData(result);
     } catch (error) {
       console.error("Error fetching attendance data:", error);
@@ -112,15 +124,20 @@ const AttendanceCalendar = ({ selectedSubject, data }: AttendanceCalendarProps) 
 
   useEffect(() => {
     fetchAttendance();
-  }, [selectedSubject, SubjectID, getAttendanceBySubject, currentMonth]);
-
+  }, [fetchAttendance]);
+  
   if (isLoadingSubjectDetails) return <CalendarSkeleton />;
 
   if (!attendanceData) {
     return (
       <div className="flex flex-col gap-2 justify-center items-center h-64">
         <p>No attendance data available</p>
-        <Button size="sm" variant="outline" className="" onClick={fetchAttendance}>
+        <Button
+          size="sm"
+          variant="outline"
+          className=""
+          onClick={fetchAttendance}
+        >
           <RefreshCw />
           Reload
         </Button>
@@ -178,22 +195,26 @@ const AttendanceCalendar = ({ selectedSubject, data }: AttendanceCalendarProps) 
       );
     }
 
-    const statusStyles: Record<string, { icon: React.ReactNode; bg: string }> = {
-      P: {
-        icon: <CheckCircle strokeWidth={3} className="text-green-500" />,
-        bg: "dark:bg-green-800/30 bg-green-500/30",
-      },
-      A: {
-        icon: <X strokeWidth={3} className="text-red-500" />,
-        bg: "dark:bg-red-900/30 bg-red-500/30",
-      },
-      L: {
-        icon: <Clock strokeWidth={3} className="text-yellow-500" />,
-        bg: "dark:bg-yellow-800/30 bg-yellow-500/30",
-      },
-    };
+    const statusStyles: Record<string, { icon: React.ReactNode; bg: string }> =
+      {
+        P: {
+          icon: <CheckCircle strokeWidth={3} className="text-green-500" />,
+          bg: "dark:bg-green-800/30 bg-green-500/30",
+        },
+        A: {
+          icon: <X strokeWidth={3} className="text-red-500" />,
+          bg: "dark:bg-red-900/30 bg-red-500/30",
+        },
+        L: {
+          icon: <Clock strokeWidth={3} className="text-yellow-500" />,
+          bg: "dark:bg-yellow-800/30 bg-yellow-500/30",
+        },
+      };
 
-    const status = statusStyles[attendance.AttendanceType] || { icon: null, bg: "" };
+    const status = statusStyles[attendance.AttendanceType] || {
+      icon: null,
+      bg: "",
+    };
 
     return (
       <td className={cn("relative", baseClasses)}>

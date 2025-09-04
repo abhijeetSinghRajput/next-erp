@@ -19,6 +19,7 @@ import {
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
 
 interface LoginPageProps extends React.HTMLAttributes<HTMLDivElement> {
   className?: string;
@@ -84,9 +85,12 @@ function LoginPage({ className, ...props }: LoginPageProps) {
                   className="flex flex-col items-center gap-2 font-medium"
                 >
                   <div className="flex size-24 items-center justify-center rounded-md">
-                    <img
-                      src="./graphic-era-university-dehradun-logo.png"
+                    <Image
+                      src="/graphic-era-university-dehradun-logo.png"
                       alt="University Logo"
+                      width={100}
+                      height={100}
+                      className="object-contain"
                     />
                   </div>
                   <span className="sr-only">
@@ -180,12 +184,14 @@ function LoginPage({ className, ...props }: LoginPageProps) {
                   {loadingCaptcha ? (
                     <Skeleton className={"h-14 rounded-none"} />
                   ) : (
-                    <div className="h-14 border w-full bg-white mx-auto">
+                    <div className="h-14 border w-full bg-white mx-auto relative">
                       {captchaImage && (
-                        <img
-                          className="w-full h-full object-contain"
+                        <Image
                           src={captchaImage}
-                          alt="captchaImage"
+                          alt="Captcha"
+                          fill 
+                          className="object-contain"
+                          unoptimized 
                         />
                       )}
                     </div>

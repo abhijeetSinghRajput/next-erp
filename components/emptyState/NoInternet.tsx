@@ -2,6 +2,7 @@ import React from "react";
 import { motion } from "framer-motion";
 import { RefreshCw } from "lucide-react";
 import { Button } from "../ui/button";
+import Image from "next/image";
 
 const NoInternet = () => {
   const handleRetry = () => {
@@ -17,19 +18,15 @@ const NoInternet = () => {
       className="min-h-screen bg-gradient-to-br flex flex-col items-center justify-center p-8 text-center"
     >
       <motion.div
-        animate={{
-          y: [0, -10, 0],
-        }}
-        transition={{
-          repeat: Infinity,
-          duration: 3,
-          ease: "easeInOut",
-        }}
+        animate={{ y: [0, -10, 0] }}
+        transition={{ repeat: Infinity, duration: 3, ease: "easeInOut" }}
+        className="relative w-52 h-52 mx-auto mb-8"
       >
-        <img
+        <Image
           src="/no-internet.png"
           alt="No internet connection"
-          className="w-52 h-52 object-contain mx-auto mb-8"
+          fill
+          className="object-contain"
         />
       </motion.div>
 

@@ -238,21 +238,21 @@ const ProfileSkeleton = () => {
                     <dl className="space-y-4">
                       <div className="flex items-start">
                         <dt className="w-40 flex-shrink-0 text-sm font-medium text-muted-foreground">
-                          Father's Name
+                          Father&apos;s Name
                         </dt>
                         <Skeleton className="h-5 w-20" />
                       </div>
 
                       <div className="flex items-start">
                         <dt className="w-40 flex-shrink-0 text-sm font-medium text-muted-foreground">
-                          Father's Mobile
+                          Father&apos;s Mobile
                         </dt>
                         <Skeleton className="h-5 w-20" />
                       </div>
 
                       <div className="flex items-start">
                         <dt className="w-40 flex-shrink-0 text-sm font-medium text-muted-foreground">
-                          Mother's Name
+                          Mother&apos;s Name
                         </dt>
                         <Skeleton className="h-5 w-20" />
                       </div>
