@@ -22,11 +22,11 @@ const FeeSkeleton = ({ header = "Fee Submissions" }) => {
 
 const PaymentSummary = () => {
   return (
-    <Card>
-      <CardHeader>
+    <Card className="">
+      <CardHeader className="">
         <Skeleton className="h-4 max-w-44" />
       </CardHeader>
-      <CardContent>
+      <CardContent className="">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <PaymentDetail />
           <PaymentDetail className="hidden md:block" />

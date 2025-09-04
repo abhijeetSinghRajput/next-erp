@@ -2,7 +2,7 @@ import {
   AttendanceData,
   useAttendanceStore,
 } from "@/stores/useAttendanceStore";
-import React, { useEffect, useState, useMemo } from "react";
+import React, { useEffect, useState, useMemo, useCallback } from "react";
 import { Calendar } from "@/components/ui/calendar";
 import {
   startOfMonth,
@@ -93,7 +93,7 @@ const AttendanceCalendar = ({
     return attendanceMap.get(date.getTime());
   };
 
-  const fetchAttendance = async () => {
+  const fetchAttendance = useCallback(async () => {
     if (!selectedSubject) return;
 
     const visibleStart = startOfWeek(startOfMonth(currentMonth), {
@@ -120,7 +120,7 @@ const AttendanceCalendar = ({
     } catch (error) {
       console.error("Error fetching attendance data:", error);
     }
-  };
+  }, [selectedSubject, currentMonth, RegID, SubjectID, PeriodAssignID, TTID, LectureTypeID, getAttendanceBySubject]);
 
   useEffect(() => {
     fetchAttendance();

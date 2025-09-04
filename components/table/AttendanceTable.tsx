@@ -72,7 +72,7 @@ const AttendanceTable = () => {
 
   useEffect(() => {
     getAllAttendanceSubjects({ RegID: student?.RegID });
-  }, [student?.RegID]);
+  }, [student?.RegID, getAllAttendanceSubjects]);
 
   if (isLoadingSubjects) {
     return <TableSkeleton />;

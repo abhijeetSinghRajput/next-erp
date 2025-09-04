@@ -69,7 +69,7 @@ export function StudentProfile() {
             fetchProfile();
             loadAvatar();
         }
-    }, [authenticated]);
+    }, [authenticated, fetchProfile, loadAvatar]);
 
     const TABS = [
         { id: 0, title: "Academic", icon: <GraduationCap className="h-4 w-4" /> },
