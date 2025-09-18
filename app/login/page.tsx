@@ -8,9 +8,9 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { cn, validateLoginForm } from "@/lib/utils";
 import { useAuthStore } from "@/stores/useAuthStore";
 import {
+  ExternalLink,
   Eye,
   EyeOff,
-  Loader2,
   Lock,
   RefreshCw,
   ShieldCheck,
@@ -18,14 +18,15 @@ import {
 } from "lucide-react";
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import { Ring } from "ldrs/react";
+import ExpandableSwitch from "@/components/ExpandableSwitch";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { useRouter } from "next/navigation";
-import Image from "next/image";
 
-interface LoginPageProps extends React.HTMLAttributes<HTMLDivElement> {
+interface LoginProps {
   className?: string;
 }
-
-function LoginPage({ className, ...props }: LoginPageProps) {
+const LoginPage = ({ className, ...props }: LoginProps) => {
   const router = useRouter();
   const [showPassword, setShowPassword] = useState(false);
   const { captchaImage, loadingCaptcha, getCaptcha, loggingIn, login } =
@@ -45,7 +46,7 @@ function LoginPage({ className, ...props }: LoginPageProps) {
 
   useEffect(() => {
     getCaptcha();
-  }, [getCaptcha]);
+  }, []);
 
   const handleInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     // Clear error for this field when typing
@@ -56,7 +57,7 @@ function LoginPage({ className, ...props }: LoginPageProps) {
     }));
   };
 
-  const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
+  const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
 
     if (!validateLoginForm(formData, setErrors)) return;
@@ -68,7 +69,7 @@ function LoginPage({ className, ...props }: LoginPageProps) {
     <div className="h-svh">
       <Header />
       <div className="max-w-md p-4 mx-auto flex items-center justify-center mt-8">
-        <div className={cn("flex flex-col gap-6 w-full", className)}>
+        <div className={cn("flex flex-col gap-6 w-full", className)} {...props}>
           <form onSubmit={handleLogin}>
             {/* Display form-level error */}
             {errors.form && (
@@ -80,27 +81,13 @@ function LoginPage({ className, ...props }: LoginPageProps) {
             <div className="flex flex-col gap-6">
               {/* University logo and title... */}
               <div className="flex flex-col items-center gap-2">
-                <a
-                  href="#"
-                  className="flex flex-col items-center gap-2 font-medium"
-                >
-                  <div className="flex size-24 items-center justify-center rounded-md">
-                    <Image
-                      src="/graphic-era-university-dehradun-logo.png"
-                      alt="University Logo"
-                      width={100}
-                      height={100}
-                      className="object-contain"
-                    />
-                  </div>
-                  <span className="sr-only">
-                    Graphic Era Deemed to be university
-                  </span>
-                </a>
                 <h1 className="text-xl font-bold">
                   Welcome to{" "}
                   <span className="text-red-500 font-serif">Graphic Era</span>
                 </h1>
+                <div>
+                  <ExpandableSwitch />
+                </div>
               </div>
 
               <div className="flex flex-col gap-4">
@@ -111,7 +98,7 @@ function LoginPage({ className, ...props }: LoginPageProps) {
                       Student Id
                     </Label>
                     <Link
-                      href={"/forgot-password"}
+                      href={"/forgot-id"}
                       className="text-sm text-muted-foreground font-medium underline-offset-4 hover:underline"
                     >
                       Forgot your id?
@@ -122,6 +109,7 @@ function LoginPage({ className, ...props }: LoginPageProps) {
                       <User2 className="size-5" />
                     </span>
                     <Input
+                      type={"text"}
                       id="studentId"
                       value={formData.studentId}
                       onChange={handleInput}
@@ -129,7 +117,6 @@ function LoginPage({ className, ...props }: LoginPageProps) {
                       className={`h-11 rounded-lg focus-visible:ring-2 pl-9 bg-input/30 ${
                         errors.studentId ? "ring-2 ring-destructive" : ""
                       }`}
-                      type={undefined}
                     />
                   </div>
                   {errors.studentId && (
@@ -140,7 +127,7 @@ function LoginPage({ className, ...props }: LoginPageProps) {
                 {/* Password Field */}
                 <div className="grid gap-2">
                   <div className="flex items-center justify-between">
-                    <Label htmlFor="password" className={""}>
+                    <Label htmlFor="password" className={undefined}>
                       Password
                     </Label>
                     <Link
@@ -165,11 +152,11 @@ function LoginPage({ className, ...props }: LoginPageProps) {
                       }`}
                     />
                     <Button
+                      size={"default"}
                       type="button"
                       variant="ghost"
-                      className="text-muted-foreground rounded-l-none px-2 h-full absolute top-0 right-0"
+                      className="text-muted-foreground rounded-l-none size-5 h-full absolute top-0 right-0"
                       onClick={() => setShowPassword((prev) => !prev)}
-                      size={undefined}
                     >
                       {showPassword ? <Eye /> : <EyeOff />}
                     </Button>
@@ -184,17 +171,16 @@ function LoginPage({ className, ...props }: LoginPageProps) {
                   {loadingCaptcha ? (
                     <Skeleton className={"h-14 rounded-none"} />
                   ) : (
-                    <div className="h-14 border w-full bg-white mx-auto relative">
-                      {captchaImage && (
-                        <Image
-                          src={captchaImage}
-                          alt="Captcha"
-                          fill 
-                          className="object-contain"
-                          unoptimized 
-                        />
-                      )}
-                    </div>
+                    <Avatar className="h-14 rounded-none border w-full bg-white mx-auto">
+                      <AvatarImage
+                        className="w-full h-full object-contain"
+                        src={captchaImage}
+                        alt="captchaImage"
+                      />
+                      <AvatarFallback className="text-sm flex gap-2 items-center font-medium text-muted-foreground/50 rounded-none w-full h-full">
+                        Failed To Load Captcha
+                      </AvatarFallback>
+                    </Avatar>
                   )}
 
                   <div className="relative rounded-md">
@@ -202,6 +188,7 @@ function LoginPage({ className, ...props }: LoginPageProps) {
                       <ShieldCheck className="size-5" />
                     </span>
                     <Input
+                      type={"text"}
                       id="captcha"
                       value={formData.captcha}
                       onChange={handleInput}
@@ -211,15 +198,14 @@ function LoginPage({ className, ...props }: LoginPageProps) {
                       className={`h-11 rounded-lg focus-visible:ring-2 pl-9 bg-input/30 ${
                         errors.captcha ? "ring-2 ring-destructive" : ""
                       }`}
-                      type={undefined}
                     />
                     <Button
+                      size={"default"}
                       type="button"
                       variant="ghost"
-                      className="text-muted-foreground rounded-l-none px-2 h-full absolute top-0 right-0"
+                      className="text-muted-foreground rounded-l-none size-5 h-full absolute top-0 right-0"
                       onClick={getCaptcha}
                       disabled={loadingCaptcha}
-                      size={undefined}
                     >
                       <RefreshCw
                         className={loadingCaptcha ? "animate-spin" : ""}
@@ -232,24 +218,51 @@ function LoginPage({ className, ...props }: LoginPageProps) {
                 </div>
 
                 <Button
+                  variant={"default"}
+                  size={"default"}
                   type="submit"
                   disabled={loadingCaptcha || loggingIn || !captchaImage}
                   className="w-full h-11 rounded-lg"
-                  variant={undefined}
-                  size={undefined}
                 >
                   Login
                   {loggingIn && (
-                    <Loader2 className="animate-spin ml-2" size={16} />
+                    <Ring
+                      size={16}
+                      speed={1.5}
+                      stroke={2}
+                      color="var(--primary-foreground)"
+                    />
                   )}
                 </Button>
               </div>
             </div>
           </form>
+
+          <div className="text-muted-foreground *:[a]:hover:text-primary text-center text-xs text-balance *:[a]:underline *:[a]:underline-offset-4">
+            By clicking continue, you agree to our{" "}
+            <Link
+              href={"/policy"}
+              className="text-muted-foreground font-medium underline-offset-4 underline"
+            >
+              Privacy Policy
+            </Link>
+          </div>
+          <blockquote className="text-sm text-muted-foreground bg-input/30 border-l-2 p-2 rounded-md overflow-hidden border-accent pl-4 italic">
+            “The portal does not store any credentials and is fully open-source.
+            You can verify our security practices by reviewing the source code.”
+            <a
+              href="https://github.com/abhijeetSinghRajput/geu-erp"
+              target="_blank"
+              className="inline-flex items-center gap-1 underline underline-offset-4 text-primary font-medium ml-1"
+            >
+              github
+              <ExternalLink size={14} />
+            </a>
+          </blockquote>
         </div>
       </div>
     </div>
   );
-}
+};
 
 export default LoginPage;

@@ -3,7 +3,7 @@ import { toast } from "sonner";
 import { create } from "zustand";
 import type { AxiosError } from "axios";
 
-// Type definitions for exam data
+// ---------- Types ----------
 export interface ExamSummaryItem {
   YearSem: string;
   Result: "Pass" | "Fail";
@@ -21,31 +21,52 @@ export interface BacklogItem {
   YS?: string;
 }
 
+export type ExamType = "sessional" | "endTerm" | "midTerm";
+
+export interface AdmitCardData {
+  YearSem: string;
+  Caption: string;
+  Course: string;
+  [key: string]: any;
+}
+
 interface ExamState {
   examSummary: ExamSummaryItem[];
   backlogs: BacklogItem[];
   loadingExamSummary: boolean;
   loadingMarksheet: string | null;
+  loadingAdmitCard: ExamType | false;
   errors: {
     getExamSummary: string | null;
     getBacklogs: string | null;
     downloadMarksheet: string | null;
+    getAdmitCard: string | null;
   };
+  admitCards: Record<ExamType, AdmitCardData | null>;
 
   getExamSummary: () => Promise<void>;
   getBacklogs: () => Promise<void>;
   downloadMarksheet: (yearSem: string) => Promise<void>;
+  getAdmitCard: (examType: ExamType) => Promise<void>;
 }
 
+// ---------- Store ----------
 export const useExamStore = create<ExamState>((set, get) => ({
   examSummary: [],
   backlogs: [],
   loadingExamSummary: false,
   loadingMarksheet: null,
+  loadingAdmitCard: false,
   errors: {
     getExamSummary: null,
     getBacklogs: null,
     downloadMarksheet: null,
+    getAdmitCard: null,
+  },
+  admitCards: {
+    sessional: null,
+    endTerm: null,
+    midTerm: null,
   },
 
   getExamSummary: async () => {
@@ -54,13 +75,12 @@ export const useExamStore = create<ExamState>((set, get) => ({
       errors: { ...get().errors, getExamSummary: null },
     });
     try {
-      const res = await axiosInstance.get("/exam/summary");
-      console.log(res.data);
+      const res = await axiosInstance.get<ExamSummaryItem[]>("/exam/summary");
       set({ examSummary: res.data });
-    } catch (error: unknown) {
-      const axiosError = error as AxiosError<any> | undefined;
+    } catch (err) {
+      const axiosError = err as AxiosError<{ message?: string }>;
       const message =
-        axiosError?.response?.data?.message ||
+        axiosError.response?.data?.message ??
         "Something went wrong while fetching exam summary";
       set({ errors: { ...get().errors, getExamSummary: message } });
       toast.error(message);
@@ -70,51 +90,71 @@ export const useExamStore = create<ExamState>((set, get) => ({
   },
 
   getBacklogs: async () => {
-    set({
-      errors: { ...get().errors, getBacklogs: null },
-    });
+    set({ errors: { ...get().errors, getBacklogs: null } });
     try {
-      const res = await axiosInstance.get("/exam/backlogs");
+      const res = await axiosInstance.get<BacklogItem[]>("/exam/backlogs");
       set({ backlogs: res.data });
-    } catch (error: unknown) {
-      const axiosError = error as AxiosError<any> | undefined;
+    } catch (err) {
+      const axiosError = err as AxiosError<{ message?: string }>;
       const message =
-        axiosError?.response?.data?.message ||
+        axiosError.response?.data?.message ??
         "Something went wrong while fetching backlogs";
       set({ errors: { ...get().errors, getBacklogs: message } });
       toast.error(message);
     }
   },
 
-  downloadMarksheet: async (yearSem: string) => {
+  downloadMarksheet: async (yearSem) => {
     set({ loadingMarksheet: yearSem });
     try {
-      const response = await axiosInstance.get("/exam/marksheet", {
+      const res = await axiosInstance.get("/exam/marksheet", {
         params: { yearSem },
         responseType: "blob",
       });
-      
-      // Create blob URL and trigger download
-      const blob = new Blob([response.data], { type: "application/pdf" });
-      const url = window.URL.createObjectURL(blob);
-      const link = document.createElement("a");
-      link.href = url;
-      link.download = `marksheet-${yearSem}.pdf`;
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-      window.URL.revokeObjectURL(url);
-      
+
+      const blob = new Blob([res.data], { type: "application/pdf" });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = `marksheet-${yearSem}.pdf`;
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      URL.revokeObjectURL(url);
+
       toast.success("Marksheet downloaded successfully");
-    } catch (error: unknown) {
-      const axiosError = error as AxiosError<any> | undefined;
+    } catch (err) {
+      const axiosError = err as AxiosError<{ message?: string }>;
       const message =
-        axiosError?.response?.data?.message ||
+        axiosError.response?.data?.message ??
         "Something went wrong while downloading marksheet";
       set({ errors: { ...get().errors, downloadMarksheet: message } });
       toast.error(message);
     } finally {
       set({ loadingMarksheet: null });
+    }
+  },
+
+  getAdmitCard: async (examType) => {
+    set({
+      loadingAdmitCard: examType,
+      errors: { ...get().errors, getAdmitCard: null },
+    });
+    try {
+      const res = await axiosInstance.get<{ admitCard: AdmitCardData }>(
+        `/exam/get-admit-card/${examType}`
+      );
+      set({
+        admitCards: { ...get().admitCards, [examType]: res.data.admitCard },
+      });
+    } catch (err) {
+      const axiosError = err as AxiosError<{ message?: string }>;
+      const message =
+        axiosError.response?.data?.message ?? "Failed to fetch admit card";
+      toast.error(message);
+      set({ errors: { ...get().errors, getAdmitCard: message } });
+    } finally {
+      set({ loadingAdmitCard: false });
     }
   },
 }));

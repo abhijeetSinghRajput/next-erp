@@ -1,7 +1,9 @@
-
+import "ldrs/react/Ring.css";
+import "ldrs/react/Infinity.css"
 import "./globals.css"
 import { ThemeProvider } from "@/components/theme-provider"
 import { Toaster } from "@/components/ui/sonner"
+import Head from "next/head"
 
 export const metadata = {
   title: "Next ERP",
@@ -15,6 +17,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" suppressHydrationWarning>
+      <Head>
+        <link rel="icon" type="image/svg+xml" href="/graphic-era-university-dehradun-logo.png" />
+      </Head>
       <body>
         <ThemeProvider
           attribute="class"

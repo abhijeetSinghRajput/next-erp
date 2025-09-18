@@ -18,8 +18,9 @@ export const fetchGEU = async (
     const sessionId = req.cookies.get("ASP.NET_SessionId")?.value;
     const token = req.cookies.get("__RequestVerificationToken")?.value;
     if (!sessionId || !token) {
-        throw new Error("Credentials are missing");
+        throw { code: "MISSING_CREDENTIALS", message: "Credentials are missing" };
     }
+
     const {
         method = "get",
         data = {},
@@ -29,7 +30,6 @@ export const fetchGEU = async (
     } = options;
 
     const url = `https://student.geu.ac.in${endpoint}`;
-
     const isFormEncoded =
         customHeaders["Content-Type"] === "application/x-www-form-urlencoded";
 
@@ -58,17 +58,19 @@ export const fetchGEU = async (
             responseType,
         });
 
-        // Check for unexpected login redirect
-        if (
-            typeof res.data === "string" &&
-            res.data.includes("<title>Graphic Era")
-        ) {
-            throw new Error("❌ Invalid session or redirected to login page.");
+        if (typeof res.data === "string" && res.data.includes("<title>Graphic Era")) {
+            throw { code: "INVALID_SESSION", message: "Invalid session or redirected to login page" };
         }
 
         return res.data;
-    } catch (error) {
-        console.error(`❌ Error fetching from ${endpoint}:`, error);
-        throw error;
+    } catch (err: any) {
+        if (axios.isAxiosError(err)) {
+            throw {
+                code: err.code || "AXIOS_ERROR",
+                message: err.message,
+                status: err.response?.status || 500,
+            };
+        }
+        throw { code: "UNKNOWN_ERROR", message: err?.message || "Unexpected error" };
     }
 };

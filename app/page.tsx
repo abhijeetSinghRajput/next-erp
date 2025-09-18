@@ -12,6 +12,7 @@ import AttendanceTable from "@/components/table/AttendanceTable";
 import Circular from "@/components/circular/Circular";
 import ExamSummary from "@/components/exams/ExamSummary";
 import FeeSubmissions from "@/components/fees/FeeSubmitions";
+import { Infinity } from "ldrs/react";
 
 const HomePage = () => {
   const { checkAuth, checkingAuth, authenticated } = useAuthStore();
@@ -38,7 +39,12 @@ const HomePage = () => {
   if (checkingAuth) {
     return (
       <div className="flex items-center justify-center h-screen">
-        <Loader className="animate-spin" />
+         <Infinity
+          size={30}
+          speed={1.5}
+          stroke={3}
+          color="var(--foreground)"
+        />
       </div>
     );
   }

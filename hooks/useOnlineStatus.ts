@@ -1,5 +1,6 @@
-import { useEffect, useState } from 'react';
+"use client";
 
+import { useEffect, useState } from 'react';
 const useOnlineStatus = () => {
   const [status, setStatus] = useState({
     isOnline: navigator.onLine,
