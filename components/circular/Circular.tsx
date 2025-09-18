@@ -133,7 +133,7 @@ const Circular: React.FC = () => {
                   transformOrigin: "top center",
                 }}
               >
-                <Card className="w-full rounded-3xl shadow-lg">
+                <Card className="w-full rounded-3xl shadow-lg gap-0">
                   <CardHeader className="flex pb-4 gap-2 flex-row items-start">
                     <div
                       className="aspect-square size-14 rounded-2xl text-3xl flex items-center justify-center"

@@ -20,9 +20,9 @@ const SessionManagementSection = () => {
             How We Access HTTP-Only Cookies
           </h4>
           <p className="text-muted-foreground mb-4">
-            We don't actually "access" HTTP-only cookies from the frontend -
-            that would be a security violation. Instead, we use a sophisticated
-            proxy pattern:
+            We don&apos;t actually &quot;access&quot; HTTP-only cookies from the
+            frontend - that would be a security violation. Instead, we use a
+            sophisticated proxy pattern:
           </p>
 
           <div className="space-y-4">

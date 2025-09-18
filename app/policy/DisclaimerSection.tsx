@@ -17,15 +17,16 @@ const DisclaimerSection = () => {
           <li>Use the portal for legitimate educational purposes only</li>
           <li>Not attempt to compromise the security of the system</li>
           <li>Respect the privacy of other users</li>
-          <li>Abide by your institution's code of conduct</li>
+          <li>Abide by your institution&quot;s code of conduct</li>
           <li>
             Understand that this is a community project with no official
             affiliation
           </li>
         </ul>
 
-        <blockquote>          "Your continued use of our services indicates your acceptance of these
-          terms."
+        <blockquote>
+          &quot;Your continued use of our services indicates your acceptance of
+          these terms.&quot;
         </blockquote>
       </div>
     </section>

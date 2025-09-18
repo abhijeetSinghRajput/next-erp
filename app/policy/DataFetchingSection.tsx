@@ -4,21 +4,22 @@ import Link from "next/link";
 import { useCookieStore } from "../../stores/useCookieStore";
 
 const DataFetchingSection = () => {
-  const {getBaseUrl} = useCookieStore();
+  const { getBaseUrl } = useCookieStore();
   return (
     <section id="data-fetching" className="space-y-4 md:space-y-6">
       <div className="flex justify-between items-center">
-        <h3>
+        <h3 className="flex items-center gap-2">
           <GitBranch className="text-primary" />
           How We Fetch Data
         </h3>
         <Link
-          href={"/docs"}
+          href="/docs"
           className="text-sm flex items-center gap-2 text-primary font-semibold underline underline-offset-2"
         >
           See Docs <ExternalLink size={16} />
         </Link>
       </div>
+
       <div className="text-muted-foreground space-y-4">
         <p>
           The portal{" "}
@@ -26,21 +27,19 @@ const DataFetchingSection = () => {
             does not scrape or directly access GEU databases
           </strong>
           . Instead, it communicates securely with the official{" "}
-          <a
-            href={getBaseUrl()}
-            className="text-primary hover:underline"
-          >
+          <a href={getBaseUrl()} className="text-primary hover:underline">
             GEU ERP servers
           </a>{" "}
           using your authenticated session and verification tokens.
         </p>
 
         <blockquote>
-          "All requests are proxied to official ERP endpoints. No personal data
-          or credentials are stored on our servers."
+          &quot;All requests are proxied to official ERP endpoints. No personal
+          data or credentials are stored on our servers.&quot;
         </blockquote>
 
         <p>🔑 Our data-fetching flow works as follows:</p>
+
         <ul className="list-disc space-y-2 pl-5">
           <li>
             <strong>Session Initialization:</strong> A secure session is
@@ -63,8 +62,7 @@ const DataFetchingSection = () => {
         </ul>
 
         <blockquote>
-          {" "}
-          "Minimal access, maximum security – we only fetch what you request."
+          &quot;Minimal access, maximum security – we only fetch what you request.&quot;
         </blockquote>
       </div>
     </section>

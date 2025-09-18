@@ -3,9 +3,10 @@ import { IdCardData, useStudentStore } from "../../stores/useStudentStore";
 import { cn } from "../../lib/utils";
 import { Skeleton } from "../ui/skeleton";
 import { useCookieStore } from "../../stores/useCookieStore";
+import Image from "next/image";
 
 interface IdCardProps {
-  idCard?: IdCardData | null,
+  idCard?: IdCardData | null;
   className?: string;
   campus: "deemed" | "hill";
 }
@@ -38,7 +39,7 @@ const IdCard = () => {
   );
 };
 
-const IdCardFront = ({ idCard, className, campus } : IdCardProps) => {
+const IdCardFront = ({ idCard, className, campus }: IdCardProps) => {
   const banner = campus === "hill" ? "/gehu-banner.jpeg" : "/geu-banner.jpeg";
   return (
     <div
@@ -72,10 +73,12 @@ const IdCardFront = ({ idCard, className, campus } : IdCardProps) => {
             <td className="w-24 p-2">
               <div className="w-20 h-24 bg-gray-50 flex items-center justify-center">
                 {idCard?.Photo ? (
-                  <img
+                  <Image
+                    height={96}
+                    width={80}
                     src={idCard?.Photo}
-                    alt="Student"
-                    className="w-full h-full object-cover"
+                    objectFit="cover"
+                    alt={"student profile photo"}
                   />
                 ) : (
                   <span className="text-muted-foreground ">PHOTO</span>
@@ -101,8 +104,9 @@ const IdCardFront = ({ idCard, className, campus } : IdCardProps) => {
 
                   <div className="flex gap-2">
                     <span className="font-bold whitespace-nowrap">
-                      FATHER'S NAME
+                      FATHER&apos;S NAME
                     </span>
+
                     <span className="ml-1">{idCard?.FatherName}</span>
                   </div>
                 </div>
@@ -122,9 +126,10 @@ const IdCardFront = ({ idCard, className, campus } : IdCardProps) => {
   );
 };
 
-const IdCardBack = ({ idCard, className, campus } : IdCardProps) => {
+const IdCardBack = ({ idCard, className, campus }: IdCardProps) => {
   const website = campus === "hill" ? "www.gehu.ac.in" : "www.geu.ac.in";
-  const phoneNo = campus === "hill" ? "0135-2645843" : "+91-135-2643421, 2642727";
+  const phoneNo =
+    campus === "hill" ? "0135-2645843" : "+91-135-2643421, 2642727";
   return (
     <div
       className={cn(
@@ -182,10 +187,11 @@ const IdCardBack = ({ idCard, className, campus } : IdCardProps) => {
                   <div className="text-right -mt-4">
                     <div className="mb-1">
                       {idCard?.AuthoritySignature ? (
-                        <img
+                        <Image
                           src={idCard?.AuthoritySignature}
                           alt="Authority Signature"
-                          className="h-8 w-[75px] inline-block object-fill"
+                          width={75}
+                          height={32}
                         />
                       ) : (
                         <div className="h-6 w-16 border border-gray-300 flex items-center justify-center">
@@ -217,9 +223,7 @@ const IdCardBack = ({ idCard, className, campus } : IdCardProps) => {
                   <div>
                     Bell Road, Clement Town Dehradun, Uttarakhand India -248002
                   </div>
-                  <div>
-                    Phone No : {phoneNo}
-                    </div>
+                  <div>Phone No : {phoneNo}</div>
                   <div className="mt-1">{website}</div>
                 </div>
               </div>

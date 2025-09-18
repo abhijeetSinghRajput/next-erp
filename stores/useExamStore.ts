@@ -142,7 +142,7 @@ export const useExamStore = create<ExamState>((set, get) => ({
     });
     try {
       const res = await axiosInstance.get<{ admitCard: AdmitCardData }>(
-        `/exam/get-admit-card/${examType}`
+        `/exam/admitcards/${examType}`
       );
       set({
         admitCards: { ...get().admitCards, [examType]: res.data.admitCard },

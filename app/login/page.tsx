@@ -46,7 +46,7 @@ const LoginPage = ({ className, ...props }: LoginProps) => {
 
   useEffect(() => {
     getCaptcha();
-  }, []);
+  }, [getCaptcha]);
 
   const handleInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     // Clear error for this field when typing

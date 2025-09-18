@@ -10,7 +10,7 @@ import {
   ShieldCheck,
   UserLock,
 } from "lucide-react";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import Header from "@/components/Header";
 import Sidebar from "../../components/Sidebar";
 import ContactSection from "./ContactSection";
@@ -26,16 +26,16 @@ import TransparencySection from "./TransparencySection";
 const PrivacyPolicyPage = () => {
   const [activeSection, setActiveSection] = useState("transparency");
 
-  const sections = [
-    { id: "transparency", title: "Transparency", icon: Github},
-    { id: "credentials", title: "Credentials & Security", icon: ShieldCheck},
-    { id: "data-fetching", title: "How We Fetch Data", icon: GitBranch},
-    { id: "contribution", title: "Contribution", icon: Handshake},
-    { id: "disclaimer", title: "Disclaimer", icon: AlertCircleIcon},
-    { id: "terms", title: "Terms of Service", icon: FileText},
-    { id: "privacy", title: "Privacy Policy", icon: UserLock},
-    { id: "contact", title: "Contact Information", icon: Mail},
-  ];
+  const sections = useMemo(() => [
+    { id: "transparency", title: "Transparency", icon: Github },
+    { id: "credentials", title: "Credentials & Security", icon: ShieldCheck },
+    { id: "data-fetching", title: "How We Fetch Data", icon: GitBranch },
+    { id: "contribution", title: "Contribution", icon: Handshake },
+    { id: "disclaimer", title: "Disclaimer", icon: AlertCircleIcon },
+    { id: "terms", title: "Terms of Service", icon: FileText },
+    { id: "privacy", title: "Privacy Policy", icon: UserLock },
+    { id: "contact", title: "Contact Information", icon: Mail },
+  ], []);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -58,9 +58,9 @@ const PrivacyPolicyPage = () => {
     handleScroll();
 
     return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+  }, [sections]);
 
-  const scrollToSection = (sectionId : string) => {
+  const scrollToSection = (sectionId: string) => {
     const element = document.getElementById(sectionId);
     if (element) {
       element.scrollIntoView({
@@ -73,7 +73,7 @@ const PrivacyPolicyPage = () => {
   return (
     <>
       <Header>
-        <Sidebar items={sections} heading="Privacy & Policy"/>
+        <Sidebar items={sections} heading="Privacy & Policy" />
       </Header>
       <div className="relative min-h-screen w-full p-2 sm:p-4 lg:p-8 docs">
         <div className="mx-auto max-w-6xl">
@@ -106,14 +106,14 @@ const PrivacyPolicyPage = () => {
             </ul>
 
             <main className="flex flex-1 flex-col gap-16 sm:gap-20 md:gap-12">
-              <TransparencySection/> <Separator className={undefined}/>
-              <CredentialsSection/> <Separator className={undefined}/>
-              <DataFetchingSection/> <Separator className={undefined}/>
-              <ContributionSection/> <Separator className={undefined}/>
-              <DisclaimerSection/> <Separator className={undefined}/>
-              <TermsSection/> <Separator className={undefined}/>
-              <PrivacySection/> <Separator className={undefined}/>
-              <ContactSection/>
+              <TransparencySection /> <Separator className={undefined} />
+              <CredentialsSection /> <Separator className={undefined} />
+              <DataFetchingSection /> <Separator className={undefined} />
+              <ContributionSection /> <Separator className={undefined} />
+              <DisclaimerSection /> <Separator className={undefined} />
+              <TermsSection /> <Separator className={undefined} />
+              <PrivacySection /> <Separator className={undefined} />
+              <ContactSection />
             </main>
           </div>
         </div>

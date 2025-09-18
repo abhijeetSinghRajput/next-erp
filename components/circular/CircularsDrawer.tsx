@@ -128,9 +128,9 @@ const CircularDetailsDrawer: React.FC = () => {
             <DrawerTrigger asChild>
                 <Button size="" variant="secondary" className={""}>View All Notices</Button>
             </DrawerTrigger>
-            <DrawerContent className="h-[90vh]">
+            <DrawerContent className="h-[80vh]">
                 <ScrollArea className={"overflow-y-auto"}>
-                    <div className="max-w-screen-lg mx-auto p-6">
+                    <div className="max-w-screen-lg mx-auto p-2 sm:p-6">
                         <DrawerHeader className={""}>
                             <DrawerTitle className="text-2xl">
                                 All Notices & Circulars
@@ -188,7 +188,7 @@ const CircularDetailsDrawer: React.FC = () => {
                                         animate={{ opacity: 1, y: 0 }}
                                         transition={{ duration: 0.3 }}
                                     >
-                                        <Card className="w-full rounded-xl">
+                                        <Card className="w-full rounded-xl gap-0">
                                             <CardHeader className="flex pb-4 gap-2 flex-row items-start">
                                                 <div
                                                     className="aspect-square size-12 rounded-xl text-2xl flex items-center justify-center"

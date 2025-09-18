@@ -12,7 +12,7 @@ const SecuritySection = () => (
     <div className="space-y-6">
       <div className="bg-red-50 dark:bg-red-950/20 p-4 sm:p-6 rounded-lg border border-red-200 dark:border-red-800">
         <h4 className="font-semibold mb-4 text-red-800 dark:text-red-200">
-          🔒 What We DON'T Do
+          🔒 What We DON&apos;T Do
         </h4>
         <ul className="text-red-700 dark:text-red-300 space-y-2">
           <li>Store user passwords or sensitive credentials</li>

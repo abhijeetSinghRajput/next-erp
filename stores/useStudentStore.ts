@@ -105,7 +105,7 @@ export const useStudentStore = create<StudentState>((set, get) => ({
       const formData = new FormData();
       formData.append("file", file);
 
-      const res = await axiosInstance.post("/upload-avatar", formData, {
+      const res = await axiosInstance.post("/profile/update", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
@@ -124,7 +124,7 @@ export const useStudentStore = create<StudentState>((set, get) => ({
   getIdCard: async () => {
     set({ loadingIdCard: true });
     try {
-      const response = await axiosInstance.get("/idcard");
+      const response = await axiosInstance.get("/profile/idcard");
       const idCard = {
         ...response.data,
         AuthoritySignature: `data:image/bmp;base64,${response.data?.AuthoritySignature}`,

@@ -13,6 +13,7 @@ import {
 } from "lucide-react";
 import { useStudentStore } from "@/stores/useStudentStore";
 import { Skeleton } from "../ui/skeleton";
+import Image from "next/image";
 
 const ProfileSkeleton = () => {
   const { student } = useStudentStore();
@@ -30,8 +31,8 @@ const ProfileSkeleton = () => {
         {/* Profile Header */}
         <CardHeader className="px-8 py-6">
           <div className="flex flex-col md:flex-row items-center gap-6">
-            <div className="size-32 rounded-full overflow-hidden animate-pulse">
-              <img src="/avatar.svg" className="opacity-20" />
+            <div className="rounded-full overflow-hidden animate-pulse">
+              <Image src="/avatar.svg" alt="Avatar" width={128} height={128} className="opacity-20 object-cover" />
             </div>
 
             <div className="text-center md:text-left space-y-2">
@@ -94,7 +95,7 @@ const ProfileSkeleton = () => {
                         <dt className="w-40 flex-shrink-0 text-sm font-medium text-muted-foreground">
                           University Roll No
                         </dt>
-                        <dd className="text-s font-mono">
+                        <dd className="text-sm font-mono">
                           <Skeleton className="h-5 w-24" />
                         </dd>
                       </div>
@@ -140,35 +141,17 @@ const ProfileSkeleton = () => {
                     Academic Performance
                   </h3>
                   <div className="space-y-6">
-                    <div>
-                      <div className="flex justify-between mb-1">
-                        <span className="text-sm font-medium">10th Grade</span>
-                        <span className="text-sm font-medium">
-                          <Skeleton className="h-5 w-12" />
-                        </span>
+                    {["10th Grade", "12th Grade", "Graduation"].map((level) => (
+                      <div key={level}>
+                        <div className="flex justify-between mb-1">
+                          <span className="text-sm font-medium">{level}</span>
+                          <span className="text-sm font-medium">
+                            <Skeleton className="h-5 w-12" />
+                          </span>
+                        </div>
+                        <Skeleton className="w-full h-2" />
                       </div>
-                      <Skeleton className={"w-full h-2"} />
-                    </div>
-
-                    <div>
-                      <div className="flex justify-between mb-1">
-                        <span className="text-sm font-medium">12th Grade</span>
-                        <span className="text-sm font-medium">
-                          <Skeleton className="h-5 w-12" />
-                        </span>
-                      </div>
-                      <Skeleton className={"w-full h-2"} />
-                    </div>
-
-                    <div>
-                      <div className="flex justify-between mb-1">
-                        <span className="text-sm font-medium">Graduation</span>
-                        <span className="text-sm font-medium">
-                          <Skeleton className="h-5 w-12" />
-                        </span>
-                      </div>
-                      <Skeleton className={"w-full h-2"} />
-                    </div>
+                    ))}
                   </div>
                 </div>
               </div>
@@ -179,48 +162,29 @@ const ProfileSkeleton = () => {
           {activeTab === 2 && (
             <div className="p-8">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                {/* Personal Details */}
                 <div className="space-y-6">
                   <div>
                     <h3 className="text-sm font-medium text-muted-foreground uppercase mb-4">
                       Personal Details
                     </h3>
                     <dl className="space-y-4">
-                      <div className="flex items-start">
-                        <dt className="w-40 flex-shrink-0 text-sm font-medium text-muted-foreground">
-                          <div className="flex items-center gap-2">
-                            <Phone className="h-4 w-4" />
-                            Mobile
-                          </div>
-                        </dt>
-                        <Skeleton className="h-5 w-20" />
-                      </div>
+                      {[
+                        { icon: <Phone className="h-4 w-4" />, label: "Mobile", width: 20 },
+                        { icon: <Cake className="h-4 w-4" />, label: "Date of Birth", width: 20 },
+                        { icon: <WalletCards className="h-4 w-4" />, label: "ABC Account", width: 24 },
+                      ].map(({ icon, label, width }) => (
+                        <div className="flex items-start" key={label}>
+                          <dt className="w-40 flex-shrink-0 text-sm font-medium text-muted-foreground">
+                            <div className="flex items-center gap-2">{icon} {label}</div>
+                          </dt>
+                          <Skeleton className={`h-5 w-${width}`} />
+                        </div>
+                      ))}
 
                       <div className="flex items-start">
                         <dt className="w-40 flex-shrink-0 text-sm font-medium text-muted-foreground">
-                          <div className="flex items-center gap-2">
-                            <Cake className="h-4 w-4" />
-                            Date of Birth
-                          </div>
-                        </dt>
-                        <Skeleton className="h-5 w-20" />
-                      </div>
-
-                      <div className="flex items-start">
-                        <dt className="w-40 flex-shrink-0 text-sm font-medium text-muted-foreground">
-                          <div className="flex items-center gap-2">
-                            <WalletCards className="h-4 w-4" />
-                            ABC Account
-                          </div>
-                        </dt>
-                        <Skeleton className="h-5 w-24" />
-                      </div>
-
-                      <div className="flex items-start">
-                        <dt className="w-40 flex-shrink-0 text-sm font-medium text-muted-foreground">
-                          <div className="flex items-center gap-2">
-                            <Home className="h-4 w-4" />
-                            Address
-                          </div>
+                          <div className="flex items-center gap-2"><Home className="h-4 w-4" /> Address</div>
                         </dt>
                         <div className="space-y-1 w-full">
                           <Skeleton className="h-4 w-full" />
@@ -232,32 +196,19 @@ const ProfileSkeleton = () => {
                   </div>
                 </div>
 
+                {/* Family Details */}
                 <div className="space-y-6">
                   <div>
                     <h3 className="text-sm font-medium text-muted-foreground uppercase mb-4">
                       Family Details
                     </h3>
                     <dl className="space-y-4">
-                      <div className="flex items-start">
-                        <dt className="w-40 flex-shrink-0 text-sm font-medium text-muted-foreground">
-                          Father&apos;s Name
-                        </dt>
-                        <Skeleton className="h-5 w-20" />
-                      </div>
-
-                      <div className="flex items-start">
-                        <dt className="w-40 flex-shrink-0 text-sm font-medium text-muted-foreground">
-                          Father&apos;s Mobile
-                        </dt>
-                        <Skeleton className="h-5 w-20" />
-                      </div>
-
-                      <div className="flex items-start">
-                        <dt className="w-40 flex-shrink-0 text-sm font-medium text-muted-foreground">
-                          Mother&apos;s Name
-                        </dt>
-                        <Skeleton className="h-5 w-20" />
-                      </div>
+                      {["Father&apos;s Name", "Father&apos;s Mobile", "Mother&apos;s Name"].map((label) => (
+                        <div className="flex items-start" key={label}>
+                          <dt className="w-40 flex-shrink-0 text-sm font-medium text-muted-foreground">{label}</dt>
+                          <Skeleton className="h-5 w-20" />
+                        </div>
+                      ))}
                     </dl>
                   </div>
                 </div>

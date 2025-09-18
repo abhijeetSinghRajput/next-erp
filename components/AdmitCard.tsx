@@ -1,28 +1,28 @@
-import { useEffect } from "react";
+import { useCallback, useEffect } from "react";
 import { ExamType, useExamStore } from "../stores/useExamStore";
 import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
 import { Button } from "./ui/button";
-import { Ring} from "ldrs/react";
+import { Ring } from "ldrs/react";
 import { Bell } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "./ui/card";
 import { Badge } from "./ui/badge";
 import { cn } from "../lib/utils";
 
 interface ButtonProps {
-    variant? : string;
-    className?: string;
+  variant?: string;
+  className?: string;
 }
 
-const AdmitCard = ({ variant = "outline", className } : ButtonProps) => {
+const AdmitCard = ({ variant = "outline", className }: ButtonProps) => {
   const { getAdmitCard, admitCards, loadingAdmitCard } = useExamStore();
 
-  const pingAdmitCard = () => {
+  const pingAdmitCard = useCallback(() => {
     (["sessional", "endTerm", "midTerm"] as ExamType[]).forEach(getAdmitCard);
-  };
+  }, [getAdmitCard]);
 
   useEffect(() => {
     pingAdmitCard();
-  }, []);
+  }, [pingAdmitCard]);
 
   const filteredAdmitCard = Object.fromEntries(
     Object.entries(admitCards).filter(([_, value]) => value)
@@ -32,7 +32,7 @@ const AdmitCard = ({ variant = "outline", className } : ButtonProps) => {
 
   return (
     <Popover>
-      <PopoverTrigger>
+      <PopoverTrigger asChild>
         <Button
           variant={variant}
           size="icon"
@@ -55,12 +55,7 @@ const AdmitCard = ({ variant = "outline", className } : ButtonProps) => {
         {/* --- Loading state --- */}
         {loadingAdmitCard && (
           <div className="flex items-center justify-center py-6">
-            <Ring
-              size={20}
-              speed={1.5}
-              stroke={2}
-              color="var(--foreground)"
-            />
+            <Ring size={20} speed={1.5} stroke={2} color="var(--foreground)" />
           </div>
         )}
 
@@ -70,7 +65,12 @@ const AdmitCard = ({ variant = "outline", className } : ButtonProps) => {
             <p className="text-sm text-muted-foreground">
               No admit card available
             </p>
-            <Button size="sm" onClick={pingAdmitCard} className={undefined} variant={undefined}>
+            <Button
+              size="sm"
+              onClick={pingAdmitCard}
+              className={undefined}
+              variant={undefined}
+            >
               Reload
             </Button>
           </div>
@@ -80,12 +80,14 @@ const AdmitCard = ({ variant = "outline", className } : ButtonProps) => {
         {!loadingAdmitCard && hasCards && (
           <div className="space-y-2">
             {Object.entries(filteredAdmitCard).map(([examType, admitCard]) => (
-              <Card key={examType} className="bg-input/30 shadow-SM">
-                <CardHeader className="flex-row gap-2 justify-between items-center mb-2 p-3 pb-0">
+              <Card key={examType} className="bg-input/30 shadow-SM gap-0 py-0">
+                <CardHeader className="flex flex-row gap-2 justify-between items-center mb-2 p-3 pb-0">
                   <CardTitle className="text-sm">
                     Semester {admitCard?.YearSem}
                   </CardTitle>
-                  <Badge className={undefined} variant={undefined}>{examType}</Badge>
+                  <Badge className={undefined} variant={undefined}>
+                    {examType}
+                  </Badge>
                 </CardHeader>
                 <CardContent className="p-3 pt-1 space-y-1">
                   <p className="text-muted-foreground text-xs font-semibold">

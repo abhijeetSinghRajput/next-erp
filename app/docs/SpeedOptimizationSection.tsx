@@ -6,7 +6,7 @@ const SpeedOptimizationSection = () => (
   <section id="speed" className="space-y-6">
     <div className="flex items-center gap-3">
       <Zap className="w-6 h-6 text-primary flex-shrink-0" />
-      <h3>Why We're Faster Than Official GEU Website</h3>
+      <h3>Why We&apos;re Faster Than Official GEU Website</h3>
     </div>
 
     <div className="space-y-6">

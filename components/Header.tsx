@@ -26,6 +26,7 @@ import { Ring } from "ldrs/react";
 import { Button } from "./ui/button";
 import AdmitCard from "./AdmitCard";
 import { ThemeToggleButton, useThemeToggle } from "./ui/skipperTheme";
+import Image from "next/image";
 
 const Header = ({ children }: { children?: React.ReactNode }) => {
   const { isDark, toggleTheme } = useThemeToggle({
@@ -85,21 +86,25 @@ const Header = ({ children }: { children?: React.ReactNode }) => {
         <TooltipWrapper content="Go to homepage">
           <Link href="/" className="flex items-center gap-2 h-full">
             <div className="h-full p-1">
-              <img
-                className="w-full h-full object-contain"
+              <Image
                 src={
                   campus === "hill"
-                    ? "gehu-circular-logo.png"
-                    : "./geu-circular-logo.png"
+                    ? "/gehu-circular-logo.png"
+                    : "/geu-circular-logo.png"
                 }
                 alt="Graphic Era University Logo"
+                width={50} // adjust as needed
+                height={50} // adjust as needed
+                className="object-contain w-full h-full"
               />
             </div>
             <div className="w-32">
-              <img
-                className="w-full h-full object-contain"
-                src={logo}
+              <Image
+                src={logo} // make sure this is a valid path or external URL
                 alt="Graphic Era Logo"
+                width={128} // adjust according to your design
+                height={32} // adjust according to your design
+                className="object-contain w-full h-full"
               />
             </div>
           </Link>
@@ -168,10 +173,7 @@ const Header = ({ children }: { children?: React.ReactNode }) => {
 
               {/* Privacy Policy */}
               <DropdownMenuItem asChild className={undefined} inset={undefined}>
-                <Link
-                  href="/policy"
-                  className="flex items-center gap-2 w-full"
-                >
+                <Link href="/policy" className="flex items-center gap-2 w-full">
                   <FileText />
                   <span>Privacy Policy</span>
                 </Link>

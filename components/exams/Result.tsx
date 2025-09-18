@@ -28,8 +28,8 @@ const Result: React.FC<ResultProps> = ({ examSummary }) => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.3 }}
         >
-          <Card className="rounded-3xl">
-            <CardHeader className="pb-0 justify-between items-center flex">
+          <Card className="rounded-3xl gap-0 py-0">
+            <CardHeader className="pb-0 justify-between pt-6 items-center flex">
               <div className="flex gap-2 items-center">
                 <CardTitle className="text-lg">
                   Year/Sem {exam.YearSem}

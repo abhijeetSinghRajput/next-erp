@@ -90,7 +90,7 @@ const ProfileError = ({
                       <dt className="w-40 flex-shrink-0 text-sm font-medium text-muted-foreground">
                         University Roll No
                       </dt>
-                      <dd className="text-s font-mono">
+                      <dd className="text-sm font-mono">
                         <Skeleton className="animate-none bg-destructive/30 h-5 w-24" />
                       </dd>
                     </div>

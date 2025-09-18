@@ -16,11 +16,11 @@ const HeaderMimicingSection = () => {
       <div className="space-y-6">
         <div className="bg-orange-50 dark:bg-orange-950/20 p-4 sm:p-6 rounded-lg border border-orange-200 dark:border-orange-800">
           <h4 className="font-semibold mb-4 text-orange-800 dark:text-orange-200">
-            🛡️ GEU's Security Measures
+            🛡️ GEU&apos;s Security Measures
           </h4>
           <p className="text-orange-700 dark:text-orange-300 mb-4">
             The official GEU ERP has strict security checks that block
-            non-browser requests. Here's why we need to mimic legitimate browser
+            non-browser requests. Here&apos;s why we need to mimic legitimate browser
             behavior:
           </p>
 
@@ -113,14 +113,14 @@ if (typeof res.data === "string" &&
             <li className="flex items-start gap-2">
               <CheckCircle className="w-4 h-4 mt-1" />
               <span>
-                <strong>Respect Rate Limits:</strong> Don't overwhelm GEU
+                <strong>Respect Rate Limits:</strong> Don&apos;t overwhelm GEU
                 servers
               </span>
             </li>
             <li className="flex items-start gap-2">
               <CheckCircle className="w-4 h-4 mt-1" />
               <span>
-                <strong>No Data Storage:</strong> We don't store sensitive user
+                <strong>No Data Storage:</strong> We don&apos;t store sensitive user
                 data
               </span>
             </li>

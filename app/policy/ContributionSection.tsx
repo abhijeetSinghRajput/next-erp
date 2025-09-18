@@ -15,7 +15,7 @@ const ContributionSection = () => {
         </p>
 
         <blockquote>
-          "Together, we can build a better platform for all GEU students."
+          &quot;Together, we can build a better platform for all GEU students.&quot;
         </blockquote>
 
         <p>How you can contribute:</p>

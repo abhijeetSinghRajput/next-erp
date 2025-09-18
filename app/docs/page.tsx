@@ -1,17 +1,25 @@
 "use client";
 
 import {
+  AlertCircleIcon,
   Cookie,
+  FileText,
+  GitBranch,
+  Github,
   Globe,
+  Handshake,
   Layers,
+  Mail,
   Monitor,
   Server,
   Settings,
   Shield,
+  ShieldCheck,
+  UserLock,
   Users,
   Zap,
 } from "lucide-react";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import Header from "@/components/Header";
 import OverviewSection from "./OverviewSection";
 import SpeedOptimizationSection from "./SpeedOptimizationSection";
@@ -30,19 +38,19 @@ import Sidebar from "../../components/Sidebar";
 const DocsPage = () => {
   const [activeSection, setActiveSection] = useState("transparency");
 
-  const sections = [
-    { id: "overview", title: "Project Overview", icon: Globe },
-    { id: "speed", title: "Performance & Speed", icon: Zap },
-    { id: "session", title: "Session Management", icon: Cookie },
-    { id: "headers", title: "Header Manipulation", icon: Globe },
-    { id: "architecture", title: "System Architecture", icon: Settings },
-    { id: "ui", title: "UI/UX Design", icon: Layers },
-    { id: "security", title: "Security & Privacy", icon: Monitor },
-    { id: "api", title: "API Endpoints", icon: Shield },
-    { id: "faq", title: "Frequently Asked Questions", icon: Server },
-    { id: "technical", title: "Technical Deep Dive", icon: Users },
-    { id: "metrics", title: "Performance Metrics", icon: Zap },
-  ];
+  const sections = useMemo(
+    () => [
+      { id: "transparency", title: "Transparency", icon: Github },
+      { id: "credentials", title: "Credentials & Security", icon: ShieldCheck },
+      { id: "data-fetching", title: "How We Fetch Data", icon: GitBranch },
+      { id: "contribution", title: "Contribution", icon: Handshake },
+      { id: "disclaimer", title: "Disclaimer", icon: AlertCircleIcon },
+      { id: "terms", title: "Terms of Service", icon: FileText },
+      { id: "privacy", title: "Privacy Policy", icon: UserLock },
+      { id: "contact", title: "Contact Information", icon: Mail },
+    ],
+    []
+  );
 
   useEffect(() => {
     const handleScroll = () => {
@@ -65,9 +73,9 @@ const DocsPage = () => {
     handleScroll();
 
     return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+  }, [sections]);
 
-  const scrollToSection = (sectionId : string) => {
+  const scrollToSection = (sectionId: string) => {
     const element = document.getElementById(sectionId);
     if (element) {
       element.scrollIntoView({

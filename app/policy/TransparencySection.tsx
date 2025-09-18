@@ -5,10 +5,11 @@ import { Button } from "../../components/ui/button";
 const TransparencySection = () => {
   return (
     <section id="transparency" className="space-y-4 md:space-y-6">
-      <h3>
+      <h3 className="flex items-center gap-2">
         <Github className="text-primary" />
         Transparency
       </h3>
+
       <div className="text-muted-foreground space-y-4">
         <p>
           This student portal is a{" "}
@@ -20,8 +21,8 @@ const TransparencySection = () => {
         </p>
 
         <blockquote>
-          "The portal does not store any credentials and is fully open-source.
-          You can verify our security practices by reviewing the source code."
+          &quot;The portal does not store any credentials and is fully open-source.
+          You can verify our security practices by reviewing the source code.&quot;
         </blockquote>
 
         <p>Key points:</p>
@@ -42,9 +43,9 @@ const TransparencySection = () => {
 
         <a
           href="https://github.com/your-username/geu-student-portal"
-          className="inline-flex items-center gap-2 text-primary hover:underline font-medium"
+          className="inline-flex items-center gap-2"
         >
-          <Button className={undefined} variant={undefined} size={undefined}>
+          <Button variant="default" size="md" className="flex items-center gap-2">
             <Github size={16} />
             View on GitHub
           </Button>
