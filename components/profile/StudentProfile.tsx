@@ -58,18 +58,14 @@ export function StudentProfile() {
         isFetchingProfile,
         fetchProfile,
         errors,
-        loadAvatar,
-        loadingAvatar,
-        avatarBlobUrl,
     } = useStudentStore();
     const { authenticated } = useAuthStore();
 
     useEffect(() => {
         if (authenticated) {
             fetchProfile();
-            loadAvatar();
         }
-    }, [authenticated, fetchProfile, loadAvatar]);
+    }, [authenticated, fetchProfile]);
 
     const TABS = [
         { id: 0, title: "Academic", icon: <GraduationCap className="h-4 w-4" /> },
@@ -83,10 +79,7 @@ export function StudentProfile() {
 
     if (errors.fetchProfile || !student) {
         return (
-            <ProfileError description={errors.fetchProfile ?? undefined} onReload={()=>{
-                fetchProfile();
-                loadAvatar();
-            }} />
+            <ProfileError description={errors.fetchProfile ?? undefined} onReload={fetchProfile} />
         );
     }
 

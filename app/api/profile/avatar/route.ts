@@ -14,7 +14,7 @@ export async function GET(req: NextRequest) {
       );
     }
 
-    const imageResponse = await axios.get(`{BASE_URL}/Account/show`, {
+    const imageResponse = await axios.get(`${BASE_URL}/Account/show`, {
       headers: {
         Cookie: `ASP.NET_SessionId=${sessionId}; __RequestVerificationToken=${token}`,
         Referer: BASE_URL,
