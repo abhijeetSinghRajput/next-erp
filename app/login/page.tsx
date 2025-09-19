@@ -147,7 +147,7 @@ const LoginPage = ({ className, ...props }: LoginProps) => {
                       type={showPassword ? "text" : "password"}
                       onChange={handleInput}
                       placeholder="Enter your password"
-                      className={`h-11 rounded-lg focus-visible:ring-2 px-9 bg-input/30 ${
+                      className={`h-11 rounded-lg focus-visible:ring-2 pl-9 pr-11 bg-input/30 ${
                         errors.password ? "ring-2 ring-destructive" : ""
                       }`}
                     />
@@ -155,7 +155,7 @@ const LoginPage = ({ className, ...props }: LoginProps) => {
                       size={"default"}
                       type="button"
                       variant="ghost"
-                      className="text-muted-foreground rounded-l-none size-5 h-full absolute top-0 right-0"
+                      className="text-muted-foreground rounded-l-none h-full absolute top-0 right-0"
                       onClick={() => setShowPassword((prev) => !prev)}
                     >
                       {showPassword ? <Eye /> : <EyeOff />}
@@ -195,7 +195,7 @@ const LoginPage = ({ className, ...props }: LoginProps) => {
                       placeholder="Fill the Captcha"
                       disabled={loadingCaptcha || !captchaImage}
                       autoComplete="off"
-                      className={`h-11 rounded-lg focus-visible:ring-2 pl-9 bg-input/30 ${
+                      className={`h-11 rounded-lg focus-visible:ring-2 pl-9 pr-11 bg-input/30 ${
                         errors.captcha ? "ring-2 ring-destructive" : ""
                       }`}
                     />
@@ -203,7 +203,7 @@ const LoginPage = ({ className, ...props }: LoginProps) => {
                       size={"default"}
                       type="button"
                       variant="ghost"
-                      className="text-muted-foreground rounded-l-none size-5 h-full absolute top-0 right-0"
+                      className="text-muted-foreground rounded-l-none h-full absolute top-0 right-0"
                       onClick={getCaptcha}
                       disabled={loadingCaptcha}
                     >

@@ -53,6 +53,13 @@ export async function POST(req: NextRequest) {
       })
     );
 
+    if (!BASE_URL) {
+      return NextResponse.json(
+        { message: "Missing x-base-url header" },
+        { status: 400 }
+      );
+    }
+
     const response = await client.post(BASE_URL, formData, {
       maxRedirects: 0,
       validateStatus: (status) => status >= 200 && status < 400,
