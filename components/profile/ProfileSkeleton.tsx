@@ -11,12 +11,9 @@ import {
   WalletCards,
   GraduationCap,
 } from "lucide-react";
-import { useStudentStore } from "@/stores/useStudentStore";
 import { Skeleton } from "../ui/skeleton";
-import Image from "next/image";
 
 const ProfileSkeleton = () => {
-  const { student } = useStudentStore();
   const [activeTab, setActiveTab] = useState(0);
 
   const TABS = [
@@ -31,9 +28,7 @@ const ProfileSkeleton = () => {
         {/* Profile Header */}
         <CardHeader className="px-8 py-6">
           <div className="flex flex-col md:flex-row items-center gap-6">
-            <div className="rounded-full overflow-hidden animate-pulse">
-              <Image src="/avatar.svg" alt="Avatar" width={128} height={128} className="opacity-20 object-cover" />
-            </div>
+            <Skeleton className={"size-32 rounded-full"}/>
 
             <div className="text-center md:text-left space-y-2">
               <CardTitle className="text-3xl font-bold tracking-tight">

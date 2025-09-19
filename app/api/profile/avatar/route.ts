@@ -5,6 +5,7 @@ export async function GET(req: NextRequest) {
   try {
     const sessionId = req.cookies.get("ASP.NET_SessionId")?.value;
     const token = req.cookies.get("__RequestVerificationToken")?.value;
+    const BASE_URL = req.headers.get("x-base-url");
 
     if (!sessionId || !token) {
       return NextResponse.json(
@@ -13,17 +14,14 @@ export async function GET(req: NextRequest) {
       );
     }
 
-    const imageResponse = await axios.get(
-      "https://student.geu.ac.in/Account/show",
-      {
-        headers: {
-          Cookie: `ASP.NET_SessionId=${sessionId}; __RequestVerificationToken=${token}`,
-          Referer: "https://student.geu.ac.in/",
-        },
-        responseType: "arraybuffer",
-        withCredentials: true,
-      }
-    );
+    const imageResponse = await axios.get(`{BASE_URL}/Account/show`, {
+      headers: {
+        Cookie: `ASP.NET_SessionId=${sessionId}; __RequestVerificationToken=${token}`,
+        Referer: BASE_URL,
+      },
+      responseType: "arraybuffer",
+      withCredentials: true,
+    });
 
     if (!imageResponse.data || imageResponse.data.length === 0) {
       return NextResponse.json(

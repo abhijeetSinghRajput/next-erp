@@ -17,6 +17,8 @@ export const fetchGEU = async (
 ) => {
     const sessionId = req.cookies.get("ASP.NET_SessionId")?.value;
     const token = req.cookies.get("__RequestVerificationToken")?.value;
+    const BASE_URL = req.headers.get("x-base-url");
+
     if (!sessionId || !token) {
         throw { code: "MISSING_CREDENTIALS", message: "Credentials are missing" };
     }
@@ -25,11 +27,11 @@ export const fetchGEU = async (
         method = "get",
         data = {},
         customHeaders = {},
-        referer = "https://student.geu.ac.in",
+        referer = BASE_URL,
         responseType = "json",
     } = options;
 
-    const url = `https://student.geu.ac.in${endpoint}`;
+    const url = `${BASE_URL}${endpoint.startsWith('/') ? endpoint.slice(1) : endpoint}`;
     const isFormEncoded =
         customHeaders["Content-Type"] === "application/x-www-form-urlencoded";
 
@@ -38,7 +40,7 @@ export const fetchGEU = async (
             ? "application/x-www-form-urlencoded"
             : "application/json",
         "X-Requested-With": "XMLHttpRequest",
-        Origin: "https://student.geu.ac.in",
+        Origin: BASE_URL,
         Referer: referer,
         Cookie: `ASP.NET_SessionId=${sessionId}; __RequestVerificationToken=${token}`,
         ...customHeaders,

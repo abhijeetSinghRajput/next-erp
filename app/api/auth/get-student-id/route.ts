@@ -2,16 +2,13 @@ import { NextRequest, NextResponse } from "next/server";
 import axios from "axios";
 import qs from "qs";
 
-const DEEMED_BASE_URL = "https://student.geu.ac.in/";
-const HILL_BASE_URL = "https://student.gehu.ac.in/";
-
 export async function POST(req: NextRequest) {
   try {
     // 1️⃣ Parse body and cookies
     const { DOB, email } = await req.json();
     const campus = req.cookies.get("campus")?.value || "deemed";
 
-    const BASE_URL = campus === "hill" ? HILL_BASE_URL : DEEMED_BASE_URL;
+    const BASE_URL = req.headers.get("x-base-url");
 
     // 2️⃣ Prepare form-urlencoded payload
     const payload = qs.stringify({
@@ -27,7 +24,7 @@ export async function POST(req: NextRequest) {
         headers: {
           accept: "*/*",
           "content-type": "application/x-www-form-urlencoded; charset=UTF-8",
-          "user-agent": "Mozilla/5.0",       
+          "user-agent": "Mozilla/5.0",
           "x-requested-with": "XMLHttpRequest",
           referer: `${BASE_URL}Account/ForgotID`,
         },
@@ -40,7 +37,10 @@ export async function POST(req: NextRequest) {
       result: response.data,
     });
   } catch (error: any) {
-    console.error("Getstudentid error:", error?.response?.data || error.message);
+    console.error(
+      "Getstudentid error:",
+      error?.response?.data || error.message
+    );
     return NextResponse.json(
       {
         message: "Internal server error",

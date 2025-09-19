@@ -3,8 +3,6 @@ import { NextRequest, NextResponse } from "next/server";
 import axios from "axios";
 import FormData from "form-data";
 
-const DEEMED_BASE_URL = "https://student.geu.ac.in/";
-const HILL_BASE_URL = "https://student.gehu.ac.in/";
 
 export async function POST(req: NextRequest) {
   try {
@@ -12,7 +10,7 @@ export async function POST(req: NextRequest) {
     const cookies = req.cookies;
     const sessionId = cookies.get("ASP.NET_SessionId")?.value;
     const token = cookies.get("__RequestVerificationToken")?.value;
-    const campus = cookies.get("campus")?.value || "deemed";
+    const BASE_URL = req.headers.get("x-base-url");
 
     if (!sessionId || !token) {
       return NextResponse.json({ message: "Credentials are missing" }, { status: 400 });
@@ -34,8 +32,6 @@ export async function POST(req: NextRequest) {
       filename: `avatar.${extension}`,
       contentType: file.type,
     });
-
-    const BASE_URL = campus === "hill" ? HILL_BASE_URL : DEEMED_BASE_URL;
 
     // 3️⃣ POST to remote ERP
     const response = await axios.post(

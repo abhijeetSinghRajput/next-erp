@@ -36,7 +36,7 @@ const Result: React.FC<ResultProps> = ({ examSummary }) => {
                 </CardTitle>
                 <Badge
                   className={""}
-                  variant={exam.Result === "Pass" ? "default" : "destructive"}
+                  variant={exam.Result === "Fail" ? "destructive" : "default"}
                 >
                   {exam.Result}
                 </Badge>

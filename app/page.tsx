@@ -5,7 +5,6 @@ import Header from "@/components/Header";
 import { StudentProfile } from "@/components/profile/StudentProfile";
 import useOnlineStatus from "@/hooks/useOnlineStatus";
 import { useAuthStore } from "@/stores/useAuthStore";
-import { Loader } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import AttendanceTable from "@/components/table/AttendanceTable";

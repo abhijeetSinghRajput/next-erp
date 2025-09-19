@@ -6,13 +6,14 @@ export async function GET(req: NextRequest) {
   try {
     const sessionId = req.cookies.get("ASP.NET_SessionId")?.value;
     const token = req.cookies.get("__RequestVerificationToken")?.value;
+    const BASE_URL = req.headers.get("x-base-url");
 
     if (!sessionId || !token) {
       return NextResponse.json({ message: "Session or token missing" }, { status: 401 });
     }
 
     const response = await axios.get(
-      "https://student.geu.ac.in/account/Cyborg_StudentMenu",
+      `${BASE_URL}/account/Cyborg_StudentMenu`,
       {
         headers: {
           Cookie: `ASP.NET_SessionId=${sessionId}; __RequestVerificationToken=${token}`,

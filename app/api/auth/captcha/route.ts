@@ -1,5 +1,4 @@
 import { NextRequest, NextResponse } from "next/server";
-import { getCaptcha } from "@/controllers/auth"
 import { CookieJar } from "tough-cookie";
 import { wrapper } from "axios-cookiejar-support";
 import axios from "axios";
@@ -17,8 +16,17 @@ export async function GET(req: NextRequest) {
                 withCredentials: true,
             })
         );
+        const BASE_URL = req.headers.get("x-base-url");
+        
+        if (!BASE_URL) {
+            return NextResponse.json(
+                { message: "Missing x-base-url header" },
+                { status: 400 }
+            );
+        }
+
         // Step 1: Get initial page to establish session and get tokens
-        const initialResponse = await client.get("https://student.geu.ac.in/");
+        const initialResponse = await client.get(BASE_URL);
 
         // Parse the HTML to get the form's verification token
         const $ = load(initialResponse.data);
@@ -34,7 +42,7 @@ export async function GET(req: NextRequest) {
         }
 
         // Step 6: Set cookies for frontend
-        const cookies = await jar.getCookies("https://student.geu.ac.in/");
+        const cookies = await jar.getCookies(BASE_URL);
         const response = NextResponse.json({ image: captchaUrl, formToken });
         setCookies(response, cookies.map(cookie => cookie.cookieString()));
 

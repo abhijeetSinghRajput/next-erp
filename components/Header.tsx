@@ -208,7 +208,7 @@ const Header = ({ children }: { children?: React.ReactNode }) => {
                   <DropdownMenuItem
                     onClick={logout}
                     disabled={loginingOut}
-                    className="text-red-600 flex items-center gap-2"
+                    className="text-destructive hover:bg-destructive/20 flex items-center gap-2"
                     inset={undefined}
                   >
                     {loginingOut || 0 ? (
@@ -216,10 +216,10 @@ const Header = ({ children }: { children?: React.ReactNode }) => {
                         size={16}
                         speed={1.5}
                         stroke={2}
-                        color="var(--foreground)"
+                        color="var(--destructive)"
                       />
                     ) : (
-                      <LogOut />
+                      <LogOut className="text-destructive" />
                     )}
                     <span>Logout</span>
                   </DropdownMenuItem>

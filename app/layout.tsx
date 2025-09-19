@@ -1,5 +1,6 @@
 import "ldrs/react/Ring.css";
-import "ldrs/react/Infinity.css"
+import "ldrs/react/Infinity.css";
+import "ldrs/react/Mirage.css";
 import "./globals.css"
 import { ThemeProvider } from "@/components/theme-provider"
 import { Toaster } from "@/components/ui/sonner"

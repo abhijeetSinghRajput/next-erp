@@ -2,16 +2,11 @@
 import { NextRequest, NextResponse } from "next/server";
 import axios from "axios";
 
-const DEEMED_BASE_URL = "https://student.geu.ac.in/";
-const HILL_BASE_URL = "https://student.gehu.ac.in/";
-
 export async function POST(req: NextRequest) {
   try {
     // 1️⃣ Extract body + cookies
     const { studentId, email, DOB } = await req.json();
-    const campus = req.cookies.get("campus")?.value || "deemed";
-
-    const BASE_URL = campus === "hill" ? HILL_BASE_URL : DEEMED_BASE_URL;
+    const BASE_URL = req.headers.get("x-base-url");
 
     // 2️⃣ Build target URL for ERP
     const url = `${BASE_URL}Account/ResetPassword?ID=${encodeURIComponent(

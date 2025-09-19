@@ -8,12 +8,7 @@ import {
   DialogTrigger,
 } from "../ui/dialog";
 import { Card, CardContent } from "../ui/card";
-import {
-  Upload,
-  Image as ImageIcon,
-  X,
-  Camera,
-} from "lucide-react";
+import { Upload, Image as ImageIcon, X, Camera } from "lucide-react";
 import imageCompression from "browser-image-compression";
 import { useStudentStore } from "../../stores/useStudentStore";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
@@ -143,6 +138,7 @@ const ProfilePhotoUploader = () => {
                 type="button"
                 onClick={() => inputRef.current.click()}
                 disabled={compressing || uploadingAvatar}
+                size="lg"
               >
                 <ImageIcon /> Choose
               </Button>
@@ -151,14 +147,15 @@ const ProfilePhotoUploader = () => {
                 onClick={handleUpload}
                 disabled={!file || compressing || uploadingAvatar}
                 className="flex items-center gap-2"
+                size="lg"
               >
-                {uploadingAvatar ? (
+                {uploadingAvatar? (
                   <>
                     <Ring
-                      size={20}
+                      size={16}
                       speed={1.5}
                       stroke={2}
-                      color="hsl(var(--primary-foreground))"
+                      color="var(--primary-foreground)"
                     />
                     Uploading...
                   </>
