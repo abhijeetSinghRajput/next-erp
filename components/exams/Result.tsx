@@ -6,6 +6,7 @@ import CircularProgress from "../ui/circular-progress";
 import { Button } from "../ui/button";
 import TooltipWrapper from "../TooltipWrapper";
 import { useExamStore, type ExamSummaryItem } from "../../stores/useExamStore";
+import { Ring } from "ldrs/react";
 
 interface ResultProps {
   examSummary: ExamSummaryItem[];
@@ -13,7 +14,7 @@ interface ResultProps {
 
 const Result: React.FC<ResultProps> = ({ examSummary }) => {
   const { loadingMarksheet, downloadMarksheet } = useExamStore();
-  
+
   return (
     <motion.div
       initial={{ opacity: 0 }}
@@ -50,7 +51,12 @@ const Result: React.FC<ResultProps> = ({ examSummary }) => {
                   onClick={() => downloadMarksheet(exam.YearSem)}
                 >
                   {loadingMarksheet === exam.YearSem ? (
-                    <Loader2 className="animate-spin" />
+                    <Ring
+                      size={16}
+                      speed={1.5}
+                      stroke={2}
+                      color="hsl(var(--primary-foreground))"
+                    />
                   ) : (
                     <Download />
                   )}

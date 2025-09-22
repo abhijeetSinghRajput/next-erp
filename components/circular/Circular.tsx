@@ -3,7 +3,7 @@
 import { cn, formatRelativeDate } from "@/lib/utils";
 import { motion, AnimatePresence } from "framer-motion";
 import React, { useEffect, useMemo, useState } from "react";
-import { useNoticeStore, type Circular } from "@/stores/useCircularStore";
+import { useNoticeStore, type Circular } from "@/stores/useNoticeStore";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "../ui/badge";
 import CircularDetailsDrawer from "./CircularsDrawer";

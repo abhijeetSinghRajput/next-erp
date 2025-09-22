@@ -3,24 +3,25 @@ import { toast } from "sonner";
 import { create } from "zustand";
 
 export interface Circular {
-    EmployeeName: unknown;
-    CirID: number;
-    Subject: string;
-    Notice: string;
-    DateFrom: string; //"12/04/2025"
-    CollID: 1;
-    DateTo: string; //"31/12/2025";
-    ByDepartment: string;
-    download: string;
-    UnicolID: number;
-    Chk: "0";
-    CreatedOn: string; //"12/04/2025"
-    ShowAsAPopup: boolean;
-    ImageExtension: string; //".pdf";
-    Circular: any | null
+  EmployeeName: unknown;
+  CirID: number;
+  Subject: string;
+  Notice: string;
+  DateFrom: string; //"12/04/2025"
+  CollID: 1;
+  DateTo: string; //"31/12/2025";
+  ByDepartment: string;
+  download: string;
+  UnicolID: number;
+  Chk: "0";
+  CreatedOn: string; //"12/04/2025"
+  ShowAsAPopup: boolean;
+  ImageExtension: string; //".pdf";
+  Circular: any | null;
 }
 
 interface NoticeStore {
+  popupCirculars: Circular[];
   circulars: Circular[];
   allCirculars: Circular[];
   isLoadingCirculars: boolean;
@@ -35,6 +36,7 @@ interface NoticeStore {
 }
 
 export const useNoticeStore = create<NoticeStore>((set, get) => ({
+  popupCirculars: [],
   circulars: [],
   allCirculars: [],
   isLoadingCirculars: false,
@@ -52,6 +54,7 @@ export const useNoticeStore = create<NoticeStore>((set, get) => ({
     try {
       const res = await axiosInstance.get("/circular");
       const { circular } = res.data;
+      set({ popupCirculars: circular.filter((c: Circular) => c.ShowAsAPopup) });
       set({ circulars: (circular as Circular[]) || [] });
     } catch (error: any) {
       const message =

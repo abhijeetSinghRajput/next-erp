@@ -114,7 +114,7 @@ const FeeSubmissions = () => {
         <h2 className="text-2xl sm:text-3xl font-bold mb-2">Fee Submissions</h2>
 
         <Tabs defaultValue="course" className="w-full">
-          <TabsList className="grid w-full h-10 flex gap-2 w-max">
+          <TabsList className="h-10 flex gap-2 w-max">
             <TabsTrigger value="course" className="h-full">
               Course Fees
             </TabsTrigger>

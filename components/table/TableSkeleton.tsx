@@ -22,7 +22,7 @@ const TableSkeleton = ({ className } : {className?: string}) => {
     >
       <h2 className="text-2xl sm:text-3xl font-bold mb-2">Attendance</h2>
 
-      <Card className="overflow-hidden">
+      <Card className="overflow-hidden py-0 gap-0">
         <div className="sticky top-0 z-10 bg-muted">
           <div className="p-4 border-b flex justify-between gap-4">
             <div className="space-y-1">

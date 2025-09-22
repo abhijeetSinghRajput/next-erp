@@ -11,20 +11,17 @@ const FeeError = (props : any) => {
       <Tabs defaultValue="course" className="w-full">
         <TabsList className="grid w-full h-10 grid-cols-3 max-w-xs">
           <TabsTrigger value="course" className="h-full">
-            <FileTextIcon className="w-4 h-4 mr-2" />
             Course Fees
           </TabsTrigger>
           <TabsTrigger value="hostel" className="h-full">
-            <HomeIcon className="w-4 h-4 mr-2" />
             Hostel Fees
           </TabsTrigger>
           <TabsTrigger value="receipts" className="h-full">
-            <WalletIcon className="w-4 h-4 mr-2" />
             Receipts Fees
           </TabsTrigger>
         </TabsList>
       </Tabs>
-      <TableError {...props} className={"px-0 sm:px-0 md:px-0"} />
+      <TableError {...props} className={"px-0 sm:px-0 md:px-0"} description="We couldn't load the fee records. Please check your connection and try again." />
     </div>
   );
 };

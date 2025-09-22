@@ -19,6 +19,7 @@ import TooltipWrapper from "../TooltipWrapper";
 import TableError from "../table/TableError";
 import FeeSkeleton from "./FeeSkeleton";
 import { useFeeStore, type FeeReceipt } from "@/stores/useFeeStore";
+import { Ring } from "ldrs/react";
 
 interface FeeReceiptsProps {
   data: FeeReceipt[] | null;
@@ -34,15 +35,17 @@ const FeeReceipts: React.FC<FeeReceiptsProps> = ({ data }) => {
   } = useFeeStore();
 
   // Process data to fill empty remarks
-  const [visibleColumns, setVisibleColumns] = useState<Record<string, boolean>>({
-    Actions: true,
-    CombineReceiptNo: true,
-    formattedDate: true,
-    paymentType: true,
-    formattedAmount: true,
-    Remarks: false,
-    TotalAmount: true,
-  });
+  const [visibleColumns, setVisibleColumns] = useState<Record<string, boolean>>(
+    {
+      Actions: true,
+      CombineReceiptNo: true,
+      formattedDate: true,
+      paymentType: true,
+      formattedAmount: true,
+      Remarks: false,
+      TotalAmount: true,
+    }
+  );
 
   if (loadingFeeReceipts) {
     return <FeeSkeleton header={"Fee Submissions"} />;
@@ -98,7 +101,12 @@ const FeeReceipts: React.FC<FeeReceiptsProps> = ({ data }) => {
             }
           >
             {downloadingReceipt === row.CombineReceiptNo ? (
-              <Loader2 className="animate-spin" />
+              <Ring
+                size={16}
+                speed={1.5}
+                stroke={2}
+                color="hsl(var(--primary-foreground))"
+              />
             ) : (
               <Download />
             )}

@@ -24,9 +24,9 @@ import {
 import { useCookieStore } from "../stores/useCookieStore";
 import { Ring } from "ldrs/react";
 import { Button } from "./ui/button";
-import AdmitCard from "./AdmitCard";
 import { ThemeToggleButton, useThemeToggle } from "./ui/skipperTheme";
 import Image from "next/image";
+import Notification from "./Notification";
 
 const Header = ({ children }: { children?: React.ReactNode }) => {
   const { isDark, toggleTheme } = useThemeToggle({
@@ -134,7 +134,7 @@ const Header = ({ children }: { children?: React.ReactNode }) => {
           </TooltipWrapper>
 
           <ThemeToggleButton start="top-right" className="hidden sm:flex" />
-          {authenticated && <AdmitCard variant={undefined} className={""} />}
+          {authenticated && <Notification variant={undefined} className={""} />}
 
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
