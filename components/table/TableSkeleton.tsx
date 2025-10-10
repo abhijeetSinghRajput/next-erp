@@ -5,14 +5,18 @@ import {
   Table,
   TableBody,
   TableCell,
-  TableHead,
-  TableHeader,
   TableRow,
 } from "../ui/table";
 import { Skeleton } from "../ui/skeleton";
 import { cn } from "@/lib/utils";
 
-const TableSkeleton = ({ className } : {className?: string}) => {
+const TableSkeleton = ({
+  className,
+  heading,
+}: {
+  className?: string;
+  heading?: string;
+}) => {
   return (
     <div
       className={cn(
@@ -20,9 +24,11 @@ const TableSkeleton = ({ className } : {className?: string}) => {
         className
       )}
     >
-      <h2 className="text-2xl sm:text-3xl font-bold mb-2">Attendance</h2>
+      {heading && (
+        <h2 className="text-2xl sm:text-3xl font-bold mb-2">{heading}</h2>
+      )}
 
-      <Card className="overflow-hidden py-0 gap-0">
+      <Card className="overflow-hidden">
         <div className="sticky top-0 z-10 bg-muted">
           <div className="p-4 border-b flex justify-between gap-4">
             <div className="space-y-1">
@@ -41,27 +47,27 @@ const TableSkeleton = ({ className } : {className?: string}) => {
           </div>
         </div>
         <ScrollArea className="w-full whitespace-nowrap">
-          <Table className={""}>
-            <TableBody className={""}>
+          <Table className={undefined}>
+            <TableBody className={undefined}>
               {[...Array(7)].map((_, idx) => (
                 <TableRow key={idx} className={idx === 0 && "bg-muted/30 h-14"}>
-                  <TableCell className={""}>
+                  <TableCell className={undefined}>
                     <Skeleton className={"h-7 w-24"} />
                   </TableCell>
-                  <TableCell className={""}>
+                  <TableCell className={undefined}>
                     <Skeleton className={"h-7 w-24"} />
                   </TableCell>
-                  <TableCell className={""}>
+                  <TableCell className={undefined}>
                     <Skeleton className={"h-7 w-24"} />
                   </TableCell>
-                  <TableCell className={""}>
+                  <TableCell className={undefined}>
                     <Skeleton className={"h-7 w-24"} />
                   </TableCell>
                 </TableRow>
               ))}
             </TableBody>
           </Table>
-          <ScrollBar orientation="horizontal" className={""} />
+          <ScrollBar orientation="horizontal" className={undefined} />
         </ScrollArea>
       </Card>
     </div>

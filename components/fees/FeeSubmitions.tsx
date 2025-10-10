@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import {
   Card,
@@ -11,18 +11,15 @@ import {
 } from "@/components/ui/card";
 import { motion } from "framer-motion";
 import {
-  HomeIcon,
   FileTextIcon,
   WalletIcon,
   AlertCircleIcon,
   CheckCircleIcon,
 } from "lucide-react";
 
-import FeeSkeleton from "./FeeSkeleton";
 import CourseFee from "./CourseFee";
 import HostelFee from "./HostelFee";
 import FeeReceipts from "./FeeReceipts";
-import FeeError from "./FeeError";
 import { Progress } from "../ui/progress";
 import { useFeeStore, type FeeHeadData } from "@/stores/useFeeStore";
 
@@ -30,29 +27,14 @@ const FeeSubmissions = () => {
   const {
     getFeeSubmissions,
     feeSubmissions,
-    loadingFeeSubmissions,
     getFeeReceipts,
     feeReceipts,
-    errors,
   } = useFeeStore();
 
   useEffect(() => {
     getFeeSubmissions();
     getFeeReceipts();
   }, [getFeeSubmissions, getFeeReceipts]);
-
-  if (loadingFeeSubmissions) {
-    return <FeeSkeleton header={"Fee Submissions"} />;
-  }
-
-  if (errors.getFeeSubmissions || !feeSubmissions) {
-    return (
-      <FeeError
-        description={errors.getFeeSubmissions}
-        onReload={getFeeSubmissions}
-      />
-    );
-  }
 
   // Calculate totals
   const calculateTotals = (data: FeeHeadData[] | undefined) => {
@@ -83,9 +65,9 @@ const FeeSubmissions = () => {
     );
   };
 
-  const courseTotals = calculateTotals(feeSubmissions.headdata);
-  const hostelTotals = calculateTotals(feeSubmissions.headdatahostel);
-  const hasHostelFees = feeSubmissions.headdatahostel.length > 0;
+  const courseTotals = calculateTotals(feeSubmissions?.headdata);
+  const hostelTotals = calculateTotals(feeSubmissions?.headdatahostel);
+  const hasHostelFees = (feeSubmissions?.headdatahostel?.length ?? 0) > 0;
 
   // Columns configuration
   const feeColumns = [
@@ -133,7 +115,7 @@ const FeeSubmissions = () => {
               transition={{ delay: 0.1 }}
             >
               <CourseFee
-                data={prepareTableData(feeSubmissions.headdata)}
+                data={prepareTableData(feeSubmissions?.headdata ?? [])}
                 totals={courseTotals}
                 columns={feeColumns}
               />
@@ -149,7 +131,7 @@ const FeeSubmissions = () => {
               transition={{ delay: 0.1 }}
             >
               <HostelFee
-                data={prepareTableData(feeSubmissions.headdata)}
+                data={prepareTableData(feeSubmissions?.headdata ?? [])}
                 totals={hostelTotals}
                 columns={feeColumns}
                 hasHostelFees={hasHostelFees}
@@ -176,11 +158,11 @@ const FeeSubmissions = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.3 }}
         >
-          <Card className="">
-            <CardHeader className="">
+          <Card className="gap-0">
+            <CardHeader className="p-6">
               <CardTitle className="">Payment Summary</CardTitle>
             </CardHeader>
-            <CardContent className="">
+            <CardContent className="p-6 pt-0">
               <div className="flex  gap-6">
                 <div className="flex-1">
                   <div className="space-y-2">
@@ -286,14 +268,14 @@ const FeeSummaryCards: React.FC<FeeSummaryCardsProps> = ({ totals }) => {
         whileHover={{ y: -2 }}
         transition={{ type: "spring", stiffness: 300 }}
       >
-        <Card className="h-full border border-blue-100 dark:border-blue-900/50 bg-blue-50/50 dark:bg-blue-900/10">
-          <CardHeader className="pb-2">
+        <Card className="h-full gap-0 border border-blue-100 dark:border-blue-900/50 bg-blue-50/50 dark:bg-blue-900/10">
+          <CardHeader className="p-6 pb-2">
             <CardDescription className="flex items-center gap-2 text-blue-600 dark:text-blue-300">
               <FileTextIcon className="w-4 h-4" />
               Total Fees
             </CardDescription>
           </CardHeader>
-          <CardContent className="">
+          <CardContent className="p-6 pt-0">
             <div className="flex items-end justify-between">
               <CardTitle className="text-2xl font-bold">
                 ₹{totals.DueAmount.toLocaleString()}
@@ -315,14 +297,14 @@ const FeeSummaryCards: React.FC<FeeSummaryCardsProps> = ({ totals }) => {
         whileHover={{ y: -2 }}
         transition={{ type: "spring", stiffness: 300 }}
       >
-        <Card className="h-full border border-emerald-100 dark:border-emerald-900/50 bg-emerald-50/50 dark:bg-emerald-900/10">
-          <CardHeader className="pb-2">
+        <Card className="h-full border gap-0 border-emerald-100 dark:border-emerald-900/50 bg-emerald-50/50 dark:bg-emerald-900/10">
+          <CardHeader className="p-6 pb-2">
             <CardDescription className="flex items-center gap-2 text-emerald-600 dark:text-emerald-300">
               <WalletIcon className="w-4 h-4" />
               Paid Amount
             </CardDescription>
           </CardHeader>
-          <CardContent className="">
+          <CardContent className="p-6 pt-0">
             <div className="space-y-2">
               <CardTitle
                 className={`text-2xl font-bold ${
@@ -350,14 +332,14 @@ const FeeSummaryCards: React.FC<FeeSummaryCardsProps> = ({ totals }) => {
         whileHover={{ y: -2 }}
         transition={{ type: "spring", stiffness: 300 }}
       >
-        <Card className="h-full border border-rose-100 dark:border-rose-900/50 bg-rose-50/50 dark:bg-rose-900/10">
-          <CardHeader className="pb-2">
+        <Card className="h-full gap-0 border border-rose-100 dark:border-rose-900/50 bg-rose-50/50 dark:bg-rose-900/10">
+          <CardHeader className="p-6 pb-2">
             <CardDescription className="flex items-center gap-2 text-rose-600 dark:text-rose-300">
               <AlertCircleIcon className="w-4 h-4" />
               {isFullyPaid ? "Fully Paid" : "Pending Amount"}
             </CardDescription>
           </CardHeader>
-          <CardContent className="">
+          <CardContent className="p-6 pt-0">
             <CardTitle
               className={`text-2xl font-bold ${
                 isFullyPaid ? "text-emerald-600" : "text-rose-600"

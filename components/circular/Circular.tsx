@@ -134,7 +134,7 @@ const Circular: React.FC = () => {
                 }}
               >
                 <Card className="w-full rounded-3xl shadow-lg gap-0">
-                  <CardHeader className="flex pb-4 gap-2 flex-row items-start">
+                  <CardHeader className="flex p-6 pb-4 gap-2 flex-row items-start">
                     <div
                       className="aspect-square size-14 rounded-2xl text-3xl flex items-center justify-center"
                       style={{
@@ -156,7 +156,7 @@ const Circular: React.FC = () => {
                       </div>
                     </div>
                   </CardHeader>
-                  <CardContent className={""}>
+                  <CardContent className={"p-6 pt-0"}>
                     <div
                       className="line-clamp-3 text-sm text-muted-foreground"
                       dangerouslySetInnerHTML={{ __html: circular.Notice }}

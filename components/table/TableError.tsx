@@ -17,7 +17,7 @@ import { cn } from "@/lib/utils";
 interface TableErrorProps {
     variant?: string;
     heading?: string;
-    description: string;
+    description?: string;
     onReload: () => void;
     className?: string;
 }
@@ -39,7 +39,7 @@ const TableError = ({
               {heading}
             </h3>
             <p className="text-destructive max-w-md">
-              {description || "We couldn't load the attendance records. Please check your connection and try again."}
+              {description || "Opps! We couldn't load the data. Please try again."}
             </p>
             {onReload && (
               <Button

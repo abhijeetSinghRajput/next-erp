@@ -122,7 +122,7 @@ export const useExamStore = create<ExamState>((set, get) => ({
       a.remove();
       URL.revokeObjectURL(url);
 
-      toast.success("Marksheet downloaded successfully");
+      toast.success("Marksheet downloading...");
     } catch (err) {
       const axiosError = err as AxiosError<{ message?: string }>;
       const message =

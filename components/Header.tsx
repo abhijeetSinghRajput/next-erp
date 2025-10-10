@@ -10,6 +10,7 @@ import {
   Settings,
   Sun,
   User2,
+  UserRoundSearch,
 } from "lucide-react";
 import { useAuthStore } from "@/stores/useAuthStore";
 import axios from "axios";
@@ -54,7 +55,6 @@ const Header = ({ children }: { children?: React.ReactNode }) => {
   }, []);
 
   const logo = isDark ? "/graphic-era-light.svg" : "/graphic-era-dark.svg";
-  const githubLogo = isDark ? "/github-mark-white.svg" : "/github-mark.svg";
 
   const lastScrollY = useRef(0);
   const y = useMotionValue(0);
@@ -79,12 +79,12 @@ const Header = ({ children }: { children?: React.ReactNode }) => {
   return (
     <motion.nav
       style={{ y, opacity }}
-      className="flex sticky shadow-sm top-0 left-0 w-full border-b px-4 sm:px-6 bg-background z-50 justify-between items-center h-14 p-2"
+      className="flex sticky shadow-sm top-0 left-0 w-full border-b  bg-background z-50 justify-between items-center h-14"
     >
-      <div className="max-w-screen-lg w-full flex justify-between items-center mx-auto h-full">
+      <div className="max-w-screen-lg w-full flex justify-between items-center mx-auto h-full p-2 px-2 sm:px-4 md:px-6">
         {/* Logo */}
         <TooltipWrapper content="Go to homepage">
-          <Link href="/" className="flex items-center gap-2 h-full">
+          <Link href="/" className="flex items-center gap-0 h-full">
             <div className="h-full p-1">
               <Image
                 src={
@@ -98,7 +98,7 @@ const Header = ({ children }: { children?: React.ReactNode }) => {
                 className="object-contain w-full h-full"
               />
             </div>
-            <div className="w-32">
+            <div className="w-28 sm:w-32">
               <Image
                 src={logo} // make sure this is a valid path or external URL
                 alt="Graphic Era Logo"
@@ -116,7 +116,7 @@ const Header = ({ children }: { children?: React.ReactNode }) => {
             <Button
               variant="ghost"
               onClick={handleGithubClick}
-              className={undefined}
+              className="px-2.5"
               size={undefined}
             >
               {githubStarsCount}
@@ -133,7 +133,7 @@ const Header = ({ children }: { children?: React.ReactNode }) => {
             </Button>
           </TooltipWrapper>
 
-          <ThemeToggleButton start="top-right" className="hidden sm:flex" />
+          <ThemeToggleButton start="top-right" />
           {authenticated && <Notification variant={undefined} className={""} />}
 
           <DropdownMenu>
@@ -153,14 +153,26 @@ const Header = ({ children }: { children?: React.ReactNode }) => {
             </DropdownMenuTrigger>
 
             <DropdownMenuContent className="min-w-40" align="end">
-              {/* Theme toggle */}
-              <DropdownMenuItem
-                onClick={toggleTheme}
-                className="sm:hidden"
-                inset={undefined}
-              >
-                {isDark ? <Moon /> : <Sun />}
-                <span>{isDark ? "Dark" : "Light"}</span>
+              {/* Privacy Policy */}
+              <DropdownMenuItem asChild className={undefined} inset={undefined}>
+                <Link
+                  href="/forgot-id"
+                  className="flex items-center gap-2 w-full"
+                >
+                  <UserRoundSearch />
+                  <span>Forgot ID</span>
+                </Link>
+              </DropdownMenuItem>
+
+              {/* Privacy Policy */}
+              <DropdownMenuItem asChild className={undefined} inset={undefined}>
+                <Link
+                  href="/forgot-password"
+                  className="flex items-center gap-2 w-full"
+                >
+                  <Lock />
+                  <span>Forgot Password</span>
+                </Link>
               </DropdownMenuItem>
 
               {/* Docs */}
@@ -179,28 +191,6 @@ const Header = ({ children }: { children?: React.ReactNode }) => {
                 </Link>
               </DropdownMenuItem>
 
-              {/* Privacy Policy */}
-              <DropdownMenuItem asChild className={undefined} inset={undefined}>
-                <Link
-                  href="/forgot-id"
-                  className="flex items-center gap-2 w-full"
-                >
-                  <User2 />
-                  <span>Forgot ID</span>
-                </Link>
-              </DropdownMenuItem>
-
-              {/* Privacy Policy */}
-              <DropdownMenuItem asChild className={undefined} inset={undefined}>
-                <Link
-                  href="/forgot-password"
-                  className="flex items-center gap-2 w-full"
-                >
-                  <Lock />
-                  <span>Forgot Password</span>
-                </Link>
-              </DropdownMenuItem>
-
               {/* Logout */}
               {authenticated && (
                 <>
@@ -211,7 +201,7 @@ const Header = ({ children }: { children?: React.ReactNode }) => {
                     className="text-destructive hover:bg-destructive/20 flex items-center gap-2"
                     inset={undefined}
                   >
-                    {loginingOut || 0 ? (
+                    {loginingOut ? (
                       <Ring
                         size={16}
                         speed={1.5}

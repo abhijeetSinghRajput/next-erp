@@ -243,7 +243,7 @@ const ForgotIdPage: React.FC<ForgotIdPageProps> = ({ className, ...props }) => {
                         size={20}
                         speed={1.5}
                         stroke={2}
-                        color="hsl(var(--primary-foreground))"
+                        color="var(--primary-foreground)"
                       />
                       Please wait...
                     </>

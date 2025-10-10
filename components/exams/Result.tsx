@@ -55,7 +55,7 @@ const Result: React.FC<ResultProps> = ({ examSummary }) => {
                       size={16}
                       speed={1.5}
                       stroke={2}
-                      color="hsl(var(--primary-foreground))"
+                      color="var(--primary-foreground)"
                     />
                   ) : (
                     <Download />

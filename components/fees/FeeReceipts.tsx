@@ -12,7 +12,7 @@ import {
   DropdownMenuContent,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { ChevronDown, InfoIcon, Download, Loader2 } from "lucide-react";
+import { ChevronDown, InfoIcon, Download } from "lucide-react";
 import React, { useState } from "react";
 import DataTable from "../table/DataTable";
 import TooltipWrapper from "../TooltipWrapper";
@@ -34,6 +34,20 @@ const FeeReceipts: React.FC<FeeReceiptsProps> = ({ data }) => {
     errors,
   } = useFeeStore();
 
+  if (loadingFeeReceipts) {
+    return <FeeSkeleton className={"mt-0"} />;
+  }
+
+  if (errors.getFeeReceipts || !Array.isArray(data)) {
+    return (
+      <TableError
+        className={"px-0 sm:px-0 md:px-0"}
+        description={errors.getFeeReceipts || undefined}
+        onReload={getFeeReceipts}
+      />
+    );
+  }
+
   // Process data to fill empty remarks
   const [visibleColumns, setVisibleColumns] = useState<Record<string, boolean>>(
     {
@@ -46,20 +60,6 @@ const FeeReceipts: React.FC<FeeReceiptsProps> = ({ data }) => {
       TotalAmount: true,
     }
   );
-
-  if (loadingFeeReceipts) {
-    return <FeeSkeleton header={"Fee Submissions"} />;
-  }
-
-  if (errors.getFeeReceipts || !Array.isArray(data)) {
-    return (
-      <TableError
-        className={"px-0 sm:px-0 md:px-0"}
-        description={errors.getFeeReceipts || "Failed to load fee receipts"}
-        onReload={getFeeReceipts}
-      />
-    );
-  }
 
   const toggleColumnVisibility = (columnId: string) => {
     setVisibleColumns((prev) => ({
@@ -105,7 +105,7 @@ const FeeReceipts: React.FC<FeeReceiptsProps> = ({ data }) => {
                 size={16}
                 speed={1.5}
                 stroke={2}
-                color="hsl(var(--primary-foreground))"
+                color="var(--primary)"
               />
             ) : (
               <Download />

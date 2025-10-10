@@ -77,7 +77,7 @@ const Notification = ({
         >
           <Bell className="h-5 w-5" />
           {hasNotifications && (
-            <div className="absolute -top-1 -right-1 rounded-full flex justify-center items-center text-xs h-5 min-w-5 px-1 bg-red-500 border-2 border-background group-hover:border-accent transition-colors">
+            <div className="absolute text-white -top-1 -right-1 rounded-full flex justify-center items-center text-xs h-5 min-w-5 px-1 bg-red-500 border-2 border-background group-hover:border-accent transition-colors">
               {notifications.length > 9 ? "9+" : notifications.length}
             </div>
           )}
@@ -89,12 +89,12 @@ const Notification = ({
 
         {/* Loading state */}
         {isLoading && (
-          <div className="flex items-center justify-center py-8">
+          <div className="flex items-center justify-center">
             <Ring
               size={22}
               speed={1.4}
               stroke={2}
-              color="hsl(var(--foreground))"
+              color="var(--foreground)"
             />
           </div>
         )}

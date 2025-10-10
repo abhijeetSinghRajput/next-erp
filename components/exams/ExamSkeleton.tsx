@@ -22,18 +22,18 @@ const ExamSkeleton = ({heading = "Exam Summary"}) => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.3 }}
           >
-            <Card className="rounded-3xl">
-              <CardHeader className="pb-0 justify-between items-center flex-row">
+            <Card className="gap-0">
+              <CardHeader className="p-6 flex justify-between items-center flex-row">
                 <Skeleton className={"h-7 w-[150px]"} />
                 <Skeleton className="size-8" />
               </CardHeader>
-              <CardContent className="flex p-6 justify-between items-start">
+              <CardContent className="flex p-6 pt-0 justify-between items-start">
                 <div className="space-y-2">
                   <Skeleton className={"h-7 w-[100px]"} />
                   <Skeleton className={"h-7 w-[100px]"} />
                 </div>
 
-                <div className="size-[85px] rounded-full aspect-square border-8 flex items-center justify-center border-muted">
+                <div className="size-[85px] rounded-full aspect-square border-9 flex items-center justify-center border-muted">
                   <div className="space-y-1 w-1/2">
                     <Skeleton className={"h-6"} />
                     <Skeleton className={"h-3"} />

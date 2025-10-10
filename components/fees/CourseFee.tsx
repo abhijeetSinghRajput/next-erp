@@ -17,7 +17,9 @@ import { ChevronDown, InfoIcon } from "lucide-react";
 import React, { useState } from "react";
 import DataTable from "../table/DataTable";
 import FeeError from "./FeeError";
-import { type FeeHeadData } from "@/stores/useFeeStore";
+import { useFeeStore, type FeeHeadData } from "@/stores/useFeeStore";
+import FeeSkeleton from "./FeeSkeleton";
+import TableError from "../table/TableError";
 
 interface CourseFeeProps {
   data: FeeHeadData[];
@@ -37,18 +39,29 @@ interface CourseFeeProps {
 }
 
 const CourseFee: React.FC<CourseFeeProps> = ({ data, totals, columns }) => {
-  const [visibleColumns, setVisibleColumns] = useState<Record<string, boolean>>({
-    FeeHead: true,
-    DueAmount: true,
-    ReceivedAmount: true,
-    BalanceAmount: true,
-    status: true,
-  });
+  const { getFeeSubmissions, errors, loadingFeeSubmissions} = useFeeStore();
+  const [visibleColumns, setVisibleColumns] = useState<Record<string, boolean>>(
+    {
+      FeeHead: true,
+      DueAmount: true,
+      ReceivedAmount: true,
+      BalanceAmount: true,
+      status: true,
+    }
+  );
 
-  if(!Array.isArray(data)){
-    return <FeeError
-      description="Something went wrong"
-    />
+  if (loadingFeeSubmissions) {
+    return <FeeSkeleton className={"mt-0"} />;
+  }
+
+  if (errors.getFeeSubmissions || !Array.isArray(data)) {
+    return (
+      <TableError
+        className={"px-0 sm:px-0 md:px-0"}
+        description={errors.getFeeSubmissions || undefined}
+        onReload={getFeeSubmissions}
+      />
+    );
   }
 
   const toggleColumnVisibility = (columnId: string) => {

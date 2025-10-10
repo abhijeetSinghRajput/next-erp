@@ -25,7 +25,10 @@ import TableSkeleton from "./TableSkeleton";
 import TableError from "./TableError";
 import CircularProgress from "../ui/circular-progress";
 import DataTable from "./DataTable";
-import { useAttendanceStore, AttendanceData } from "@/stores/useAttendanceStore";
+import {
+  useAttendanceStore,
+  AttendanceData,
+} from "@/stores/useAttendanceStore";
 
 // Define the subject data type
 interface SubjectData {
@@ -67,7 +70,9 @@ const AttendanceTable = () => {
     TotalLeave: false,
     Percentage: true,
   });
-  const [selectedSubject, setSelectedSubject] = useState<SubjectData | null>(null);
+  const [selectedSubject, setSelectedSubject] = useState<SubjectData | null>(
+    null
+  );
   const [isDialogOpen, setIsDialogOpen] = useState(false);
 
   useEffect(() => {
@@ -75,17 +80,22 @@ const AttendanceTable = () => {
   }, [student?.RegID, getAllAttendanceSubjects]);
 
   if (isLoadingSubjects) {
-    return <TableSkeleton />;
+    return <TableSkeleton heading={"Attendance"} />;
   }
 
   if (errors.getAllAttendanceSubjects || !attendance) {
     return (
-      <TableError
-        description={errors.getAllAttendanceSubjects || "Failed to load attendance data"}
-        onReload={() => {
-          getAllAttendanceSubjects({ RegID: student?.RegID });
-        }}
-      />
+      <div className="max-w-screen-lg mx-auto px-2 sm:px-4 md:px-6 py-2 mt-6">
+        <h2 className="text-2xl sm:text-3xl font-bold mb-2">Attendance</h2>
+        <TableError
+          heading="Attendance"
+          className={"p-0 sm:p-0 md:p-0"}
+          description={errors.getAllAttendanceSubjects || undefined}
+          onReload={() => {
+            getAllAttendanceSubjects({ RegID: student?.RegID });
+          }}
+        />
+      </div>
     );
   }
 
@@ -151,16 +161,19 @@ const AttendanceTable = () => {
             </div>
 
             <div className="flex gap-2">
-              {!Array.isArray(attendance.state) || attendance.state.length === 0 && (<Button
-                size="icon"
-                variant="outline"
-                className="bg-input size-8"
-                onClick={() => {
-                  getAllAttendanceSubjects({ RegID: student?.RegID });
-                }}
-              >
-                <RotateCwIcon/>
-              </Button>)}
+              {!Array.isArray(attendance.state) ||
+                (attendance.state.length === 0 && (
+                  <Button
+                    size="icon"
+                    variant="outline"
+                    className="bg-input size-8"
+                    onClick={() => {
+                      getAllAttendanceSubjects({ RegID: student?.RegID });
+                    }}
+                  >
+                    <RotateCwIcon />
+                  </Button>
+                ))}
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
                   <Button
@@ -177,8 +190,14 @@ const AttendanceTable = () => {
                     <DropdownMenuCheckboxItem
                       key={column.id}
                       className="capitalize"
-                      checked={visibleColumns[column.id as keyof ColumnVisibility]}
-                      onCheckedChange={() => toggleColumnVisibility(column.id as keyof ColumnVisibility)}
+                      checked={
+                        visibleColumns[column.id as keyof ColumnVisibility]
+                      }
+                      onCheckedChange={() =>
+                        toggleColumnVisibility(
+                          column.id as keyof ColumnVisibility
+                        )
+                      }
                     >
                       {column.header}
                     </DropdownMenuCheckboxItem>
