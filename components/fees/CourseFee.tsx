@@ -50,6 +50,7 @@ const CourseFee: React.FC<CourseFeeProps> = ({ data, totals, columns }) => {
     }
   );
 
+  // loading and error handling
   if (loadingFeeSubmissions) {
     return <FeeSkeleton className={"mt-0"} />;
   }

@@ -1,4 +1,4 @@
-import { useEffect, useMemo } from "react";
+import { useCallback, useEffect, useMemo } from "react";
 import { ExamType, useExamStore } from "../stores/useExamStore";
 import { Popover, PopoverTrigger, PopoverContent } from "./ui/popover";
 import { Button } from "./ui/button";
@@ -28,15 +28,15 @@ const Notification = ({
   const { getAdmitCard, admitCards, loadingAdmitCard } = useExamStore();
   const { popupCirculars } = useNoticeStore();
 
-  const fetchNotifications = () => {
+  const fetchNotifications = useCallback(() => {
     (["sessional", "endTerm", "midTerm"] as ExamType[]).forEach((exam) =>
       getAdmitCard(exam)
     );
-  };
+  }, [getAdmitCard]);
 
   useEffect(() => {
     fetchNotifications();
-  }, []);
+  }, [fetchNotifications]);
 
   // Prepare admit card notifications
   const admitCardItems: NotificationType[] = useMemo(() => {
@@ -90,12 +90,7 @@ const Notification = ({
         {/* Loading state */}
         {isLoading && (
           <div className="flex items-center justify-center">
-            <Ring
-              size={22}
-              speed={1.4}
-              stroke={2}
-              color="var(--foreground)"
-            />
+            <Ring size={22} speed={1.4} stroke={2} color="var(--foreground)" />
           </div>
         )}
 
@@ -103,7 +98,12 @@ const Notification = ({
         {!isLoading && !hasNotifications && (
           <div className="flex flex-col items-center gap-3 py-8 text-center">
             <p className="text-sm text-muted-foreground">No notifications</p>
-            <Button size="sm" onClick={fetchNotifications} className={undefined} variant={undefined}>
+            <Button
+              size="sm"
+              onClick={fetchNotifications}
+              className={undefined}
+              variant={undefined}
+            >
               Reload
             </Button>
           </div>

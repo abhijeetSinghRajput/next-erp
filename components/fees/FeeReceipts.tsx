@@ -33,7 +33,21 @@ const FeeReceipts: React.FC<FeeReceiptsProps> = ({ data }) => {
     loadingFeeReceipts,
     errors,
   } = useFeeStore();
+  // Process data to fill empty remarks
+  const [visibleColumns, setVisibleColumns] = useState<Record<string, boolean>>(
+    {
+      Actions: true,
+      CombineReceiptNo: true,
+      formattedDate: true,
+      paymentType: true,
+      formattedAmount: true,
+      Remarks: false,
+      TotalAmount: true,
+    }
+  );
 
+
+  // loading and error handling
   if (loadingFeeReceipts) {
     return <FeeSkeleton className={"mt-0"} />;
   }
@@ -47,19 +61,6 @@ const FeeReceipts: React.FC<FeeReceiptsProps> = ({ data }) => {
       />
     );
   }
-
-  // Process data to fill empty remarks
-  const [visibleColumns, setVisibleColumns] = useState<Record<string, boolean>>(
-    {
-      Actions: true,
-      CombineReceiptNo: true,
-      formattedDate: true,
-      paymentType: true,
-      formattedAmount: true,
-      Remarks: false,
-      TotalAmount: true,
-    }
-  );
 
   const toggleColumnVisibility = (columnId: string) => {
     setVisibleColumns((prev) => ({
@@ -101,12 +102,7 @@ const FeeReceipts: React.FC<FeeReceiptsProps> = ({ data }) => {
             }
           >
             {downloadingReceipt === row.CombineReceiptNo ? (
-              <Ring
-                size={16}
-                speed={1.5}
-                stroke={2}
-                color="var(--primary)"
-              />
+              <Ring size={16} speed={1.5} stroke={2} color="var(--primary)" />
             ) : (
               <Download />
             )}
