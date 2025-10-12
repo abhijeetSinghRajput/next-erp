@@ -24,12 +24,8 @@ import { Progress } from "../ui/progress";
 import { useFeeStore, type FeeHeadData } from "@/stores/useFeeStore";
 
 const FeeSubmissions = () => {
-  const {
-    getFeeSubmissions,
-    feeSubmissions,
-    getFeeReceipts,
-    feeReceipts,
-  } = useFeeStore();
+  const { getFeeSubmissions, feeSubmissions, getFeeReceipts, feeReceipts } =
+    useFeeStore();
 
   useEffect(() => {
     getFeeSubmissions();

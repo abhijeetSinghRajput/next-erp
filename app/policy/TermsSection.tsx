@@ -5,7 +5,7 @@ const TermsSection = () => {
   return (
     <section id="terms" className="space-y-4 md:space-y-6">
       <h3 className="flex items-center gap-2">
-        <FileText className="text-primary" />
+        <FileText />
         Terms of Service
       </h3>
       <div className="text-muted-foreground space-y-4">
@@ -25,7 +25,8 @@ const TermsSection = () => {
         </ul>
 
         <blockquote>
-          &quot;Your continued use of our services indicates your acceptance of these terms.&quot;
+          &quot;Your continued use of our services indicates your acceptance of
+          these terms.&quot;
         </blockquote>
       </div>
     </section>

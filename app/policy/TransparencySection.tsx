@@ -1,12 +1,12 @@
-import { Github } from "lucide-react";
 import React from "react";
-import { Button } from "../../components/ui/button";
+import Github from "@/components/Github";
+import { Button } from "@/components/ui/button";
 
 const TransparencySection = () => {
   return (
     <section id="transparency" className="space-y-4 md:space-y-6">
       <h3 className="flex items-center gap-2">
-        <Github className="text-primary" />
+        <Github />
         Transparency
       </h3>
 
@@ -45,7 +45,7 @@ const TransparencySection = () => {
           href="https://github.com/your-username/geu-student-portal"
           className="inline-flex items-center gap-2"
         >
-          <Button variant="default" size="md" className="flex items-center gap-2">
+          <Button variant="default" className={undefined}>
             <Github size={16} />
             View on GitHub
           </Button>

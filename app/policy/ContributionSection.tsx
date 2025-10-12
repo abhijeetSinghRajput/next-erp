@@ -4,8 +4,8 @@ import React from "react";
 const ContributionSection = () => {
   return (
     <section id="contribution" className="space-y-4 md:space-y-6">
-      <h3>
-        <Handshake className="text-primary" />
+      <h3 className="flex items-center gap-2">
+        <Handshake />
         Contribution
       </h3>
       <div className="text-muted-foreground space-y-4">
@@ -15,7 +15,8 @@ const ContributionSection = () => {
         </p>
 
         <blockquote>
-          &quot;Together, we can build a better platform for all GEU students.&quot;
+          &quot;Together, we can build a better platform for all GEU
+          students.&quot;
         </blockquote>
 
         <p>How you can contribute:</p>

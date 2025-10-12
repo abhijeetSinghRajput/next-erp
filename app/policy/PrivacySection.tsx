@@ -4,7 +4,7 @@ import React from "react";
 const PrivacySection = () => {
   return (
     <section id="privacy" className="space-y-4 md:space-y-6">
-      <h3>
+      <h3 className="flex items-center gap-2">
         <UserLock className="text-primary" />
         Privacy Policy
       </h3>

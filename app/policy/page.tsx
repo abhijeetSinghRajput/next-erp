@@ -14,7 +14,6 @@ import React, { useState, useEffect, useMemo } from "react";
 import Header from "@/components/Header";
 import Sidebar from "../../components/Sidebar";
 import ContactSection from "./ContactSection";
-import DisclaimerSection from "./DisclaimerSection";
 import PrivacySection from "./PrivacySection";
 import ContributionSection from "./ContributionSection";
 import DataFetchingSection from "./DataFetchingSection";
@@ -110,7 +109,6 @@ const PrivacyPolicyPage = () => {
               <CredentialsSection /> <Separator className={undefined} />
               <DataFetchingSection /> <Separator className={undefined} />
               <ContributionSection /> <Separator className={undefined} />
-              <DisclaimerSection /> <Separator className={undefined} />
               <TermsSection /> <Separator className={undefined} />
               <PrivacySection /> <Separator className={undefined} />
               <ContactSection />
