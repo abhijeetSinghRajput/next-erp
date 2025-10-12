@@ -1,10 +1,7 @@
-import "ldrs/react/Ring.css";
-import "ldrs/react/Infinity.css";
-import "ldrs/react/Mirage.css";
+// app/layout.tsx
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
 import { Toaster } from "@/components/ui/sonner";
-import Head from "next/head";
 
 export const metadata = {
   title: "Graphic Era Dashboard",
@@ -18,56 +15,23 @@ export const metadata = {
     "Attendance Tracker",
     "Fees Portal",
   ],
-  authors: [
-    { name: "Abhijeet Singh Rajput", url: "https://mrcodium.netlify.app" },
-  ],
   viewport: "width=device-width, initial-scale=1",
-  openGraph: {
-    type: "website",
-    url: "https://geu-erp.vercel.app/",
-    title: "Graphic Era Dashboard",
-    description:
-      "Your personalized ERP dashboard for Graphic Era University with modern UI.",
-    images: [
-      {
-        url: "https://geu-erp.vercel.app/geu-circular-logo.png",
-        width: 1200,
-        height: 630,
-        alt: "Graphic Era ERP Dashboard",
-      },
-    ],
-  },
-  twitter: {
-    card: "summary_large_image",
-    url: "https://geu-erp.vercel.app/",
-    title: "Graphic Era Dashboard",
-    description:
-      "Your personalized ERP dashboard for Graphic Era University with modern UI.",
-    images: ["https://geu-erp.vercel.app/geu-circular-logo.png"],
-  },
-  alternates: {
-    canonical: "https://geu-erp.vercel.app/",
-  },
+  alternates: { canonical: "https://geu-erp.vercel.app/" },
 };
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <Head>
+      <head>
+        <title>{metadata.title}</title>
+        <meta name="description" content={metadata.description} />
+        <meta name="keywords" content={metadata.keywords.join(", ")} />
+        <meta name="viewport" content={metadata.viewport} />
         <meta name="theme-color" content="#0a0a0a" />
-      </Head>
-
+        <link rel="canonical" href={metadata.alternates.canonical} />
+      </head>
       <body>
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="system"
-          enableSystem
-          disableTransitionOnChange
-        >
+        <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
           {children}
           <Toaster />
         </ThemeProvider>

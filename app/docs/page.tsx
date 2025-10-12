@@ -34,6 +34,7 @@ import TechnicalDeepDive from "./TechnicalDeepDive";
 import PerformanceMetrics from "./PerformanceMetrics";
 import { Separator } from "@/components/ui/separator";
 import Sidebar from "../../components/Sidebar";
+import OGMeta from "@/components/OGMeta";
 
 const DocsPage = () => {
   const [activeSection, setActiveSection] = useState("transparency");
@@ -87,6 +88,14 @@ const DocsPage = () => {
 
   return (
     <>
+      <OGMeta
+        title="Documentation | Graphic Era Dashboard"
+        description="Technical documentation for the Graphic Era ERP Dashboard — architecture, APIs, and transparency."
+        url="https://geu-erp.vercel.app/docs"
+        image="https://geu-erp.vercel.app/og/docs.png"
+        imageAlt="Docs Section Preview"
+      />
+      
       <Header>
         <Sidebar items={sections} heading="Documentation" />
       </Header>
