@@ -45,7 +45,7 @@ const TransparencySection = () => {
           href="https://github.com/your-username/geu-student-portal"
           className="inline-flex items-center gap-2"
         >
-          <Button variant="default" className={undefined}>
+          <Button variant="default" className={undefined} size={undefined}>
             <Github size={16} />
             View on GitHub
           </Button>
