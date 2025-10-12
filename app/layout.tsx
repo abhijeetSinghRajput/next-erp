@@ -15,7 +15,6 @@ export const metadata = {
     "Attendance Tracker",
     "Fees Portal",
   ],
-  viewport: "width=device-width, initial-scale=1",
   alternates: { canonical: "https://geu-erp.vercel.app/" },
 };
 
@@ -26,7 +25,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <title>{metadata.title}</title>
         <meta name="description" content={metadata.description} />
         <meta name="keywords" content={metadata.keywords.join(", ")} />
-        <meta name="viewport" content={metadata.viewport} />
         <meta name="theme-color" content="#0a0a0a" />
         <link rel="canonical" href={metadata.alternates.canonical} />
       </head>
