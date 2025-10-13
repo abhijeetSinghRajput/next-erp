@@ -3,12 +3,12 @@ import React from "react";
 import { useCookieStore } from "../../stores/useCookieStore";
 
 const CredentialsSection = () => {
-  const {getBaseUrl} = useCookieStore();
+  const { getBaseUrl } = useCookieStore();
   const baseUrl = getBaseUrl();
 
   return (
     <section id="credentials" className="space-y-4 md:space-y-6">
-        <h3 className="flex items-center gap-2">
+      <h3 className="flex items-center gap-2">
         <ShieldCheck className="text-primary" />
         Credentials & Security
       </h3>
@@ -32,10 +32,7 @@ const CredentialsSection = () => {
 
         <p>
           All authentication happens directly with the official GEU ERP at{" "}
-          <a
-            href={baseUrl}
-            className="text-primary hover:underline"
-          >
+          <a href={baseUrl} className="text-primary hover:underline">
             {baseUrl}
           </a>
           .

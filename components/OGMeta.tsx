@@ -15,11 +15,18 @@ const OGMeta = ({
   title,
   description,
   url,
-  image = "https://geu-erp.vercel.app/geu-circular-logo.png",
-  imageAlt = "Graphic Era ERP Dashboard",
+  image = "https://geu-quick-access.vercel.app/geu-circular-logo.png",
+  imageAlt = "GEU Quick Access Dashboard",
   type = "website",
   twitterCard = "summary_large_image",
-  keywords = ["Graphic Era", "GEU ERP", "Student Dashboard"],
+  keywords = [
+    "GEU Quick Access",
+    "Graphic Era University",
+    "GEU ERP",
+    "Student Dashboard",
+    "Attendance Tracker",
+    "Fees Portal",
+  ],
 }: OGMetaProps) => {
   return (
     <Head>
@@ -29,7 +36,7 @@ const OGMeta = ({
       <meta name="keywords" content={keywords.join(", ")} />
       <link rel="canonical" href={url} />
 
-      {/* Open Graph */}
+      {/* Open Graph Meta */}
       <meta property="og:type" content={type} />
       <meta property="og:title" content={title} />
       <meta property="og:description" content={description} />
@@ -39,7 +46,7 @@ const OGMeta = ({
       <meta property="og:image:width" content="1200" />
       <meta property="og:image:height" content="630" />
 
-      {/* Twitter Card */}
+      {/* Twitter Meta */}
       <meta name="twitter:card" content={twitterCard} />
       <meta name="twitter:title" content={title} />
       <meta name="twitter:description" content={description} />

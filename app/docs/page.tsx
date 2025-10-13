@@ -89,13 +89,13 @@ const DocsPage = () => {
   return (
     <>
       <OGMeta
-        title="Documentation | Graphic Era Dashboard"
-        description="Technical documentation for the Graphic Era ERP Dashboard — architecture, APIs, and transparency."
-        url="https://geu-erp.vercel.app/docs"
-        image="https://geu-erp.vercel.app/og/docs.png"
-        imageAlt="Docs Section Preview"
+        title="Documentation | GEU Quick Access"
+        description="Technical documentation for GEU Quick Access — explore architecture, APIs, and ERP dashboard features."
+        url="https://geu-quick-access.vercel.app/docs"
+        image="https://geu-quick-access.vercel.app/og/docs.png"
+        imageAlt="GEU Quick Access Documentation Preview"
       />
-      
+
       <Header>
         <Sidebar items={sections} heading="Documentation" />
       </Header>

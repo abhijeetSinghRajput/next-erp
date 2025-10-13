@@ -1,35 +1,47 @@
-// app/layout.tsx
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
 import { Toaster } from "@/components/ui/sonner";
+import OGMeta from "@/components/OGMeta"; 
 
 export const metadata = {
-  title: "Graphic Era Dashboard",
+  title: "GEU Quick Access - Graphic Era ERP Dashboard",
   description:
-    "A custom Graphic Era ERP dashboard to track attendance, fees, and results seamlessly.",
+    "GEU Quick Access is a modern Graphic Era University ERP dashboard that lets students easily track attendance, fees, and exam results.",
+  url: "https://geu-quick-access.vercel.app/",
+  image: "https://geu-quick-access.vercel.app/geu-circular-logo.png",
+  imageAlt: "GEU Quick Access Dashboard",
   keywords: [
-    "Graphic Era",
-    "GEU ERP",
+    "GEU Quick Access",
     "Graphic Era University",
+    "GEU ERP",
     "Student Dashboard",
     "Attendance Tracker",
     "Fees Portal",
+    "Exam Results",
   ],
-  alternates: { canonical: "https://geu-erp.vercel.app/" },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
-        <title>{metadata.title}</title>
-        <meta name="description" content={metadata.description} />
-        <meta name="keywords" content={metadata.keywords.join(", ")} />
+        <OGMeta
+          title={metadata.title}
+          description={metadata.description}
+          url={metadata.url}
+          image={metadata.image}
+          imageAlt={metadata.imageAlt}
+          keywords={metadata.keywords}
+        />
         <meta name="theme-color" content="#0a0a0a" />
-        <link rel="canonical" href={metadata.alternates.canonical} />
       </head>
       <body>
-        <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
           {children}
           <Toaster />
         </ThemeProvider>

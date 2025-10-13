@@ -27,6 +27,7 @@ import Link from "next/link";
 import { useCookieStore } from "../../stores/useCookieStore";
 import { Ring } from "ldrs/react";
 import Image from "next/image";
+import OGMeta from "@/components/OGMeta";
 
 const ForgotPasswordPage = ({
   className,
@@ -125,185 +126,200 @@ const ForgotPasswordPage = ({
   };
 
   return (
-    <div className="h-svh">
-      <Header />
-      <div className="max-w-md p-4 mx-auto flex items-center justify-center mt-8">
-        <div className={cn("flex flex-col gap-6 w-full", className)} {...props}>
-          <form onSubmit={handleSubmit}>
-            {/* Alert for form-level messages */}
+    <>
+      <OGMeta
+        title="Forgot Password | GEU Quick Access"
+        description="Reset your Graphic Era University ERP password securely using GEU Quick Access. Enter your registered email and follow the instructions to recover your account."
+        url="https://geu-quick-access.vercel.app/forgot-password"
+        image="https://geu-quick-access.vercel.app/og/forgot-password.png"
+        imageAlt="GEU Quick Access Forgot Password Page Preview"
+      />
 
-            <div className="flex flex-col gap-6">
-              <div className="flex flex-col items-center gap-2">
-                {alert.message ? (
-                  <Alert
-                    variant={alert.type === "error" ? "destructive" : "default"}
-                    className="mb-4"
-                  >
-                    {alert.type === "error" ? (
-                      <AlertCircle className="h-4 w-4" />
-                    ) : (
-                      <CheckCircle2 className="h-4 w-4" />
-                    )}
-                    <AlertTitle className={undefined}>
-                      {alert.type === "error" ? "Error" : "Success"}
-                    </AlertTitle>
-                    <AlertDescription className={undefined}>
-                      {alert.message}
-                    </AlertDescription>
-                  </Alert>
-                ) : (
-                  <a
-                    href="#"
-                    className="flex flex-col items-center gap-2 font-medium"
-                  >
-                    <div className="flex size-24 items-center justify-center rounded-md relative w-24 h-24">
-                      <Image
-                        height={96}
-                        width={96}
-                        src={
-                          campus === "hill"
-                            ? "/gehu-circular-logo.png"
-                            : "/geu-circular-logo.png"
-                        }
-                        alt="University Logo"
-                        className="object-contain"
+      <div className="h-svh">
+        <Header />
+        <div className="max-w-md p-4 mx-auto flex items-center justify-center mt-8">
+          <div
+            className={cn("flex flex-col gap-6 w-full", className)}
+            {...props}
+          >
+            <form onSubmit={handleSubmit}>
+              {/* Alert for form-level messages */}
+
+              <div className="flex flex-col gap-6">
+                <div className="flex flex-col items-center gap-2">
+                  {alert.message ? (
+                    <Alert
+                      variant={
+                        alert.type === "error" ? "destructive" : "default"
+                      }
+                      className="mb-4"
+                    >
+                      {alert.type === "error" ? (
+                        <AlertCircle className="h-4 w-4" />
+                      ) : (
+                        <CheckCircle2 className="h-4 w-4" />
+                      )}
+                      <AlertTitle className={undefined}>
+                        {alert.type === "error" ? "Error" : "Success"}
+                      </AlertTitle>
+                      <AlertDescription className={undefined}>
+                        {alert.message}
+                      </AlertDescription>
+                    </Alert>
+                  ) : (
+                    <a
+                      href="#"
+                      className="flex flex-col items-center gap-2 font-medium"
+                    >
+                      <div className="flex size-24 items-center justify-center rounded-md relative w-24 h-24">
+                        <Image
+                          height={96}
+                          width={96}
+                          src={
+                            campus === "hill"
+                              ? "/gehu-circular-logo.png"
+                              : "/geu-circular-logo.png"
+                          }
+                          alt="University Logo"
+                          className="object-contain"
+                        />
+                      </div>
+                    </a>
+                  )}
+                  <h1 className="text-xl font-bold">FORGOT PASSWORD</h1>
+                </div>
+
+                <div className="flex flex-col gap-4">
+                  {/* Student ID */}
+                  <div className="grid gap-2">
+                    <div className="flex items-center justify-between">
+                      <Label htmlFor="studentId" className={undefined}>
+                        Student Id
+                      </Label>
+                      <Link
+                        href={"/forgot-id"}
+                        className="text-sm text-muted-foreground font-medium underline-offset-4 hover:underline"
+                      >
+                        Forgot your id?
+                      </Link>
+                    </div>
+                    <div className="relative rounded-md">
+                      <span className="absolute top-0 text-muted-foreground h-full border-r left-0 flex items-center justify-center w-8">
+                        <User2 className="size-5" />
+                      </span>
+                      <Input
+                        id="studentId"
+                        value={formData.studentId}
+                        onChange={handleInput}
+                        placeholder="Enter your Student Id"
+                        className={`h-11 rounded-lg focus-visible:ring-2 pl-9 bg-input/30 ${
+                          errors.studentId ? "ring-2 ring-destructive" : ""
+                        }`}
+                        type={undefined}
                       />
                     </div>
-                  </a>
-                )}
-                <h1 className="text-xl font-bold">FORGOT PASSWORD</h1>
-              </div>
+                    {errors.studentId && (
+                      <p className="text-red-500 text-xs">{errors.studentId}</p>
+                    )}
+                  </div>
 
-              <div className="flex flex-col gap-4">
-                {/* Student ID */}
-                <div className="grid gap-2">
-                  <div className="flex items-center justify-between">
-                    <Label htmlFor="studentId" className={undefined}>
-                      Student Id
+                  {/* Email */}
+                  <div className="grid gap-2">
+                    <Label htmlFor="email" className={undefined}>
+                      Email
                     </Label>
-                    <Link
-                      href={"/forgot-id"}
-                      className="text-sm text-muted-foreground font-medium underline-offset-4 hover:underline"
-                    >
-                      Forgot your id?
-                    </Link>
+                    <div className="relative rounded-md">
+                      <span className="absolute top-0 text-muted-foreground h-full border-r left-0 flex items-center justify-center w-8">
+                        <Mail className="size-5" />
+                      </span>
+                      <Input
+                        id="email"
+                        value={formData.email}
+                        type="email"
+                        onChange={handleInput}
+                        placeholder="Enter your email"
+                        className={`h-11 rounded-lg focus-visible:ring-2 px-9 bg-input/30 ${
+                          errors.email ? "ring-2 ring-destructive" : ""
+                        }`}
+                      />
+                    </div>
+                    {errors.email && (
+                      <p className="text-red-500 text-xs">{errors.email}</p>
+                    )}
                   </div>
-                  <div className="relative rounded-md">
-                    <span className="absolute top-0 text-muted-foreground h-full border-r left-0 flex items-center justify-center w-8">
-                      <User2 className="size-5" />
-                    </span>
-                    <Input
-                      id="studentId"
-                      value={formData.studentId}
-                      onChange={handleInput}
-                      placeholder="Enter your Student Id"
-                      className={`h-11 rounded-lg focus-visible:ring-2 pl-9 bg-input/30 ${
-                        errors.studentId ? "ring-2 ring-destructive" : ""
-                      }`}
-                      type={undefined}
-                    />
-                  </div>
-                  {errors.studentId && (
-                    <p className="text-red-500 text-xs">{errors.studentId}</p>
-                  )}
-                </div>
 
-                {/* Email */}
-                <div className="grid gap-2">
-                  <Label htmlFor="email" className={undefined}>
-                    Email
-                  </Label>
-                  <div className="relative rounded-md">
-                    <span className="absolute top-0 text-muted-foreground h-full border-r left-0 flex items-center justify-center w-8">
-                      <Mail className="size-5" />
-                    </span>
-                    <Input
-                      id="email"
-                      value={formData.email}
-                      type="email"
-                      onChange={handleInput}
-                      placeholder="Enter your email"
-                      className={`h-11 rounded-lg focus-visible:ring-2 px-9 bg-input/30 ${
-                        errors.email ? "ring-2 ring-destructive" : ""
-                      }`}
-                    />
-                  </div>
-                  {errors.email && (
-                    <p className="text-red-500 text-xs">{errors.email}</p>
-                  )}
-                </div>
-
-                {/* DOB */}
-                <div className="flex flex-col gap-2">
-                  <Label htmlFor="DOB" className="px-1">
-                    Date of birth
-                  </Label>
-                  <Popover open={open} onOpenChange={setOpen}>
-                    <PopoverTrigger asChild>
-                      <Button
-                        variant="outline"
-                        id="DOB"
-                        className="justify-between font-normal w-full h-11 bg-input/30"
-                        size={undefined}
+                  {/* DOB */}
+                  <div className="flex flex-col gap-2">
+                    <Label htmlFor="DOB" className="px-1">
+                      Date of birth
+                    </Label>
+                    <Popover open={open} onOpenChange={setOpen}>
+                      <PopoverTrigger asChild>
+                        <Button
+                          variant="outline"
+                          id="DOB"
+                          className="justify-between font-normal w-full h-11 bg-input/30"
+                          size={undefined}
+                        >
+                          {formData.DOB ? formData.DOB : "Select date"}
+                          <ChevronDownIcon />
+                        </Button>
+                      </PopoverTrigger>
+                      <PopoverContent
+                        className="w-auto overflow-hidden p-0"
+                        align="start"
                       >
-                        {formData.DOB ? formData.DOB : "Select date"}
-                        <ChevronDownIcon />
-                      </Button>
-                    </PopoverTrigger>
-                    <PopoverContent
-                      className="w-auto overflow-hidden p-0"
-                      align="start"
-                    >
-                      <Calendar
-                        mode="single"
-                        selected={date}
-                        captionLayout="dropdown"
-                        className={"bg-card"}
-                        onSelect={(selected: Date | undefined) => {
-                          if (selected) {
-                            setDate(selected);
-                            setFormData((prev) => ({
-                              ...prev,
-                              DOB: format(selected, "dd/MM/yyyy"),
-                            }));
-                            setOpen(false);
-                          }
-                        }}
-                        classNames={undefined}
-                        formatters={undefined}
-                        components={undefined}
-                      />
-                    </PopoverContent>
-                  </Popover>
-                </div>
+                        <Calendar
+                          mode="single"
+                          selected={date}
+                          captionLayout="dropdown"
+                          className={"bg-card"}
+                          onSelect={(selected: Date | undefined) => {
+                            if (selected) {
+                              setDate(selected);
+                              setFormData((prev) => ({
+                                ...prev,
+                                DOB: format(selected, "dd/MM/yyyy"),
+                              }));
+                              setOpen(false);
+                            }
+                          }}
+                          classNames={undefined}
+                          formatters={undefined}
+                          components={undefined}
+                        />
+                      </PopoverContent>
+                    </Popover>
+                  </div>
 
-                <Button
-                  type="submit"
-                  className="w-full h-11 rounded-lg"
-                  disabled={sendingMail}
-                  variant={undefined}
-                  size={undefined}
-                >
-                  {sendingMail ? (
-                    <>
-                      <Ring
-                        size={20}
-                        speed={1.5}
-                        stroke={2}
-                        color="var(--primary-foreground)"
-                      />
-                      Please wait...
-                    </>
-                  ) : (
-                    "Reset Password"
-                  )}
-                </Button>
+                  <Button
+                    type="submit"
+                    className="w-full h-11 rounded-lg"
+                    disabled={sendingMail}
+                    variant={undefined}
+                    size={undefined}
+                  >
+                    {sendingMail ? (
+                      <>
+                        <Ring
+                          size={20}
+                          speed={1.5}
+                          stroke={2}
+                          color="var(--primary-foreground)"
+                        />
+                        Please wait...
+                      </>
+                    ) : (
+                      "Reset Password"
+                    )}
+                  </Button>
+                </div>
               </div>
-            </div>
-          </form>
+            </form>
+          </div>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 

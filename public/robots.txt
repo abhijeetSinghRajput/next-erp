@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://geu-erp.vercel.app/sitemap.xml
+Sitemap: https://geu-quick-access.vercel.app/sitemap.xml

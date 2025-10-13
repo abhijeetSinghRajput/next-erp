@@ -82,11 +82,13 @@ export function StudentProfile() {
   return (
     <>
       <OGMeta
-        title="Student Profile | Graphic Era Dashboard"
-        description="View your personal, academic, and educational details on the Graphic Era ERP Dashboard."
-        url="https://geu-erp.vercel.app/profile"
-        image="https://geu-erp.vercel.app/og/dashboard.png"
+        title="Student Profile | GEU Quick Access"
+        description="View your personal, academic, and educational details on GEU Quick Access, the Graphic Era University ERP dashboard."
+        url="https://geu-quick-access.vercel.app/profile"
+        image="https://geu-quick-access.vercel.app/og/dashboard.png"
+        imageAlt="GEU Quick Access Student Profile Preview"
       />
+
       <div className="max-w-screen-lg mx-auto px-2 sm:px-4 md:px-6 py-2">
         <motion.div
           initial="hidden"

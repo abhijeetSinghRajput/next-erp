@@ -69,11 +69,11 @@ const LoginPage = ({ className, ...props }: LoginProps) => {
   return (
     <>
       <OGMeta
-        title="GEU ERP Login - Graphic Era University"
-        description="Login to your Graphic Era University ERP dashboard to access attendance, fees, and exam results securely."
-        url="https://geu-erp.vercel.app/login"
-        image="https://geu-erp.vercel.app/og/loginpage.png"
-        imageAlt="GEU ERP Login Page Preview"
+        title="GEU Quick Access Login - Graphic Era University ERP"
+        description="Login to GEU Quick Access to securely access your Graphic Era University ERP dashboard, including attendance, fees, and exam results."
+        url="https://geu-quick-access.vercel.app/login"
+        image="https://geu-quick-access.vercel.app/og/loginpage.png"
+        imageAlt="GEU Quick Access Login Page Preview"
       />
 
       <div className="h-svh">

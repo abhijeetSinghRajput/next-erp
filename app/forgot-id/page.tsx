@@ -20,6 +20,7 @@ import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { useCookieStore } from "../../stores/useCookieStore";
 import { Ring } from "ldrs/react";
 import Image from "next/image";
+import OGMeta from "@/components/OGMeta";
 
 interface ForgotIdPageProps {
   className?: string;
@@ -113,150 +114,165 @@ const ForgotIdPage: React.FC<ForgotIdPageProps> = ({ className, ...props }) => {
   };
 
   return (
-    <div className="h-svh">
-      <Header />
-      <div className="max-w-md p-4 mx-auto flex items-center justify-center mt-8">
-        <div className={cn("flex flex-col gap-6 w-full", className)} {...props}>
-          <form onSubmit={handleSubmit}>
-            <div className="flex flex-col gap-6">
-              <div className="flex flex-col items-center gap-2">
-                {alert.message ? (
-                  <Alert
-                    variant={alert.type === "error" ? "destructive" : "default"}
-                    className="mb-4"
-                  >
-                    {alert.type === "error" ? (
-                      <AlertCircle className="h-4 w-4" />
-                    ) : (
-                      <CheckCircle2 className="h-4 w-4" />
-                    )}
-                    <AlertTitle className={"text-base"}>
-                      {alert.type === "error" ? "Error" : "Success"}
-                    </AlertTitle>
-                    <AlertDescription className={undefined}>
-                      {alert.message}
-                    </AlertDescription>
-                  </Alert>
-                ) : (
-                  <a
-                    href="#"
-                    className="flex flex-col items-center gap-2 font-medium"
-                  >
-                    <div className="flex items-center justify-center rounded-md relative w-24 h-24">
-                      <Image
-                        height={96}
-                        width={96}
-                        src={
-                          campus === "hill"
-                            ? "/gehu-circular-logo.png"
-                            : "/geu-circular-logo.png"
-                        }
-                        alt="University Logo"
-                        className="object-contain"
+    <>
+      <OGMeta
+        title="Forgot ID | GEU Quick Access"
+        description="Technical documentation for GEU Quick Access — explore architecture, APIs, and ERP dashboard features for requesting your ERP User ID."
+        url="https://geu-quick-access.vercel.app/forgot-id"
+        image="https://geu-quick-access.vercel.app/og/forgot-id.png"
+        imageAlt="GEU Quick Access Forgot ID Page Preview"
+      />
+
+      <div className="h-svh">
+        <Header />
+        <div className="max-w-md p-4 mx-auto flex items-center justify-center mt-8">
+          <div
+            className={cn("flex flex-col gap-6 w-full", className)}
+            {...props}
+          >
+            <form onSubmit={handleSubmit}>
+              <div className="flex flex-col gap-6">
+                <div className="flex flex-col items-center gap-2">
+                  {alert.message ? (
+                    <Alert
+                      variant={
+                        alert.type === "error" ? "destructive" : "default"
+                      }
+                      className="mb-4"
+                    >
+                      {alert.type === "error" ? (
+                        <AlertCircle className="h-4 w-4" />
+                      ) : (
+                        <CheckCircle2 className="h-4 w-4" />
+                      )}
+                      <AlertTitle className={"text-base"}>
+                        {alert.type === "error" ? "Error" : "Success"}
+                      </AlertTitle>
+                      <AlertDescription className={undefined}>
+                        {alert.message}
+                      </AlertDescription>
+                    </Alert>
+                  ) : (
+                    <a
+                      href="#"
+                      className="flex flex-col items-center gap-2 font-medium"
+                    >
+                      <div className="flex items-center justify-center rounded-md relative w-24 h-24">
+                        <Image
+                          height={96}
+                          width={96}
+                          src={
+                            campus === "hill"
+                              ? "/gehu-circular-logo.png"
+                              : "/geu-circular-logo.png"
+                          }
+                          alt="University Logo"
+                          className="object-contain"
+                        />
+                      </div>
+                    </a>
+                  )}
+                  <h1 className="text-xl font-bold">FORGOT ID</h1>
+                </div>
+
+                <div className="flex flex-col gap-4">
+                  {/* Email */}
+                  <div className="grid gap-2">
+                    <Label htmlFor="email" className={undefined}>
+                      Email
+                    </Label>
+                    <div className="relative rounded-md">
+                      <span className="absolute top-0 text-muted-foreground h-full border-r left-0 flex items-center justify-center w-8">
+                        <Mail className="size-5" />
+                      </span>
+                      <Input
+                        id="email"
+                        value={formData.email}
+                        type="email"
+                        onChange={handleInput}
+                        placeholder="Enter your email"
+                        className={`h-11 rounded-lg focus-visible:ring-2 px-9 bg-input/30 ${
+                          errors.email ? "ring-2 ring-destructive" : ""
+                        }`}
                       />
                     </div>
-                  </a>
-                )}
-                <h1 className="text-xl font-bold">FORGOT ID</h1>
-              </div>
-
-              <div className="flex flex-col gap-4">
-                {/* Email */}
-                <div className="grid gap-2">
-                  <Label htmlFor="email" className={undefined}>
-                    Email
-                  </Label>
-                  <div className="relative rounded-md">
-                    <span className="absolute top-0 text-muted-foreground h-full border-r left-0 flex items-center justify-center w-8">
-                      <Mail className="size-5" />
-                    </span>
-                    <Input
-                      id="email"
-                      value={formData.email}
-                      type="email"
-                      onChange={handleInput}
-                      placeholder="Enter your email"
-                      className={`h-11 rounded-lg focus-visible:ring-2 px-9 bg-input/30 ${
-                        errors.email ? "ring-2 ring-destructive" : ""
-                      }`}
-                    />
+                    {errors.email && (
+                      <p className="text-red-500 text-xs">{errors.email}</p>
+                    )}
                   </div>
-                  {errors.email && (
-                    <p className="text-red-500 text-xs">{errors.email}</p>
-                  )}
-                </div>
 
-                {/* DOB */}
-                <div className="flex flex-col gap-2">
-                  <Label htmlFor="DOB" className="px-1">
-                    Date of birth
-                  </Label>
-                  <Popover open={open} onOpenChange={setOpen}>
-                    <PopoverTrigger asChild>
-                      <Button
-                        variant="outline"
-                        id="DOB"
-                        className="justify-between font-normal w-full h-11 bg-input/30"
-                        size={undefined}
+                  {/* DOB */}
+                  <div className="flex flex-col gap-2">
+                    <Label htmlFor="DOB" className="px-1">
+                      Date of birth
+                    </Label>
+                    <Popover open={open} onOpenChange={setOpen}>
+                      <PopoverTrigger asChild>
+                        <Button
+                          variant="outline"
+                          id="DOB"
+                          className="justify-between font-normal w-full h-11 bg-input/30"
+                          size={undefined}
+                        >
+                          {formData.DOB || "Select date"}
+                          <ChevronDownIcon />
+                        </Button>
+                      </PopoverTrigger>
+                      <PopoverContent
+                        className="w-auto overflow-hidden p-0"
+                        align="start"
                       >
-                        {formData.DOB || "Select date"}
-                        <ChevronDownIcon />
-                      </Button>
-                    </PopoverTrigger>
-                    <PopoverContent
-                      className="w-auto overflow-hidden p-0"
-                      align="start"
-                    >
-                      <Calendar
-                        mode="single"
-                        selected={date ?? undefined}
-                        captionLayout="dropdown"
-                        className="bg-card"
-                        onSelect={(selected: Date | undefined) => {
-                          if (selected) {
-                            setDate(selected);
-                            setFormData((prev) => ({
-                              ...prev,
-                              DOB: format(selected, "dd/MM/yyyy"),
-                            }));
-                            setOpen(false);
-                          }
-                        }}
-                        classNames={undefined}
-                        formatters={undefined}
-                        components={undefined}
-                      />
-                    </PopoverContent>
-                  </Popover>
-                </div>
+                        <Calendar
+                          mode="single"
+                          selected={date ?? undefined}
+                          captionLayout="dropdown"
+                          className="bg-card"
+                          onSelect={(selected: Date | undefined) => {
+                            if (selected) {
+                              setDate(selected);
+                              setFormData((prev) => ({
+                                ...prev,
+                                DOB: format(selected, "dd/MM/yyyy"),
+                              }));
+                              setOpen(false);
+                            }
+                          }}
+                          classNames={undefined}
+                          formatters={undefined}
+                          components={undefined}
+                        />
+                      </PopoverContent>
+                    </Popover>
+                  </div>
 
-                <Button
-                  type="submit"
-                  className="w-full h-11 rounded-lg"
-                  disabled={requestingID}
-                  variant={undefined}
-                  size={undefined}
-                >
-                  {requestingID ? (
-                    <>
-                      <Ring
-                        size={20}
-                        speed={1.5}
-                        stroke={2}
-                        color="var(--primary-foreground)"
-                      />
-                      Please wait...
-                    </>
-                  ) : (
-                    "Request ID"
-                  )}
-                </Button>
+                  <Button
+                    type="submit"
+                    className="w-full h-11 rounded-lg"
+                    disabled={requestingID}
+                    variant={undefined}
+                    size={undefined}
+                  >
+                    {requestingID ? (
+                      <>
+                        <Ring
+                          size={20}
+                          speed={1.5}
+                          stroke={2}
+                          color="var(--primary-foreground)"
+                        />
+                        Please wait...
+                      </>
+                    ) : (
+                      "Request ID"
+                    )}
+                  </Button>
+                </div>
               </div>
-            </div>
-          </form>
+            </form>
+          </div>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 
