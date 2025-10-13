@@ -1,4 +1,4 @@
-import { Metadata } from "next";
+import { Metadata } from 'next';
 
 interface MetadataProps {
   title: string;
@@ -16,11 +16,13 @@ export function generateMetadata({
   image = "https://geu-quick-access.vercel.app/geu-circular-logo.png",
   imageAlt = "GEU Quick Access Dashboard",
   keywords = ["GEU Quick Access", "Graphic Era University", "GEU ERP"],
-}: MetadataProps): Metadata {
+  robots = "index, follow", // <-- add default robots
+}: MetadataProps & { twitterSite?: string; robots?: string }): Metadata {
   return {
     title,
     description,
     keywords,
+    robots,  // <-- adds robots meta tag
     openGraph: {
       title,
       description,
@@ -34,6 +36,7 @@ export function generateMetadata({
         },
       ],
       type: "website",
+      siteName: "GEU Quick Access",
     },
     twitter: {
       card: "summary_large_image",
