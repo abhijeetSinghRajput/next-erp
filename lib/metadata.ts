@@ -12,7 +12,7 @@ interface MetadataProps {
 export function generateMetadata({
   title,
   description,
-  url,
+  url = "https://geu-quick-access.vercel.app",
   image = "https://geu-quick-access.vercel.app/geu-circular-logo.png",
   imageAlt = "GEU Quick Access Dashboard",
   keywords = ["GEU Quick Access", "Graphic Era University", "GEU ERP"],

@@ -4,7 +4,7 @@
     <!-- Docs page: most important for SEO -->
     <url>
         <loc>https://geu-quick-access.vercel.app/docs</loc>
-        <lastmod>2025-10-11</lastmod>
+        <lastmod>2025-10-14</lastmod>
         <changefreq>weekly</changefreq>
         <priority>1.0</priority>
     </url>
@@ -12,7 +12,7 @@
     <!-- Policy page: secondary importance -->
     <url>
         <loc>https://geu-quick-access.vercel.app/policy</loc>
-        <lastmod>2025-10-11</lastmod>
+        <lastmod>2025-10-14</lastmod>
         <changefreq>yearly</changefreq>
         <priority>0.7</priority>
     </url>
@@ -20,14 +20,14 @@
     <!-- Login-related pages: low SEO priority -->
     <url>
         <loc>https://geu-quick-access.vercel.app/login</loc>
-        <lastmod>2025-10-11</lastmod>
+        <lastmod>2025-10-14</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.5</priority>
     </url>
 
     <url>
         <loc>https://geu-quick-access.vercel.app/forgot-id</loc>
-        <lastmod>2025-10-11</lastmod>
+        <lastmod>2025-10-14</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.4</priority>
     </url>
