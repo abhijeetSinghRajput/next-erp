@@ -16,12 +16,30 @@ export interface AuthState {
   checkingAuth: boolean;
   authenticated: boolean;
   loginingOut: boolean;
+  error: {
+    checkAuth: string | null;
+    getCaptcha: string | null;
+    login: string | null;
+    logout: string | null;
+  };
 
   checkAuth: () => Promise<void>;
   getCaptcha: () => Promise<void>;
   login: (data: any) => Promise<boolean>;
   logout: () => Promise<void>;
 }
+
+// ✅ Centralized Error Handler
+const handleAxiosError = (error: any, defaultMessage: string) => {
+  const message =
+    error?.response?.data?.message ||
+    error?.message ||
+    defaultMessage ||
+    "An unexpected error occurred";
+  toast.error(message);
+  console.error("❌ Axios Error:", error);
+  return message;
+};
 
 export const useAuthStore = create<AuthState>()(
   persist(
@@ -34,15 +52,29 @@ export const useAuthStore = create<AuthState>()(
       checkingAuth: false,
       authenticated: false,
       loginingOut: false,
+      error: {
+        checkAuth: null,
+        getCaptcha: null,
+        login: null,
+        logout: null,
+      },
 
       checkAuth: async () => {
         set({ checkingAuth: true });
         try {
           const res = await axiosInstance.get("/auth/check-auth");
-          const { authenticated } = res.data;
-          set({ authenticated });
-        } catch {
-          set({ authenticated: false });
+          if (res?.data?.authenticated === undefined) {
+            throw new Error("Invalid auth response");
+          }
+          set({
+            authenticated: res.data.authenticated,
+            error: { ...get().error, checkAuth: null },
+          });
+        } catch (error) {
+          // const msg = handleAxiosError(error, "Failed to verify session");
+          // set({
+          //   error: { ...get().error, checkAuth: msg },
+          // });
         } finally {
           set({ checkingAuth: false });
         }
@@ -53,11 +85,18 @@ export const useAuthStore = create<AuthState>()(
         try {
           const res = await axiosInstance.get("/auth/captcha");
           const { image, formToken } = res.data;
-          set({ captchaImage: image, formToken });
+          set({
+            captchaImage: image,
+            formToken,
+            error: { ...get().error, getCaptcha: null },
+          });
         } catch (error: any) {
-          console.error("Error fetching captcha:", error);
-          toast.error(error?.response?.data?.message || "Failed to load captcha");
-          set({ captchaImage: null, formToken: "" });
+          const msg = handleAxiosError(error, "Faild to load captcha");
+          set({
+            captchaImage: null,
+            formToken: "",
+            error: { ...get().error, getCaptcha: msg },
+          });
         } finally {
           set({ loadingCaptcha: false });
         }
@@ -68,7 +107,10 @@ export const useAuthStore = create<AuthState>()(
         const { formToken } = get();
         try {
           await axiosInstance.post("/auth/login", { ...data, formToken });
-          set({ authenticated: true });
+          set({
+            authenticated: true,
+            error: { ...get().error, login: null },
+          });
           toast.success("Login Successful");
 
           const { fetchProfile } = useStudentStore.getState();
@@ -76,9 +118,13 @@ export const useAuthStore = create<AuthState>()(
 
           return true;
         } catch (error: any) {
-          console.error("Login error:", error);
-          set({ authUser: null, authenticated: false });
-          toast.error(error?.response?.data?.message || "Something went wrong");
+          const msg = handleAxiosError(error, "Login failed");
+          set({
+            authUser: null,
+            authenticated: false,
+            error: { ...get().error, login: msg },
+          });
+          get().getCaptcha();
           return false;
         } finally {
           set({ loggingIn: false });
@@ -89,9 +135,14 @@ export const useAuthStore = create<AuthState>()(
         set({ loginingOut: true });
         try {
           await axiosInstance.post("/auth/logout");
-          set({ authenticated: false, authUser: null });
+          set({
+            authenticated: false,
+            authUser: null,
+            error: { ...get().error, logout: null },
+          });
         } catch (error: any) {
-          toast.error(error?.response?.data?.message || "Failed to logout");
+          const msg = handleAxiosError(error, "Failed to logout");
+          set({ error: { ...get().error, logout: msg } });
         } finally {
           set({ loginingOut: false });
         }
@@ -99,7 +150,7 @@ export const useAuthStore = create<AuthState>()(
     }),
     {
       name: "auth-storage", // name of the item in localStorage
-      partialize: (state) => ({ 
+      partialize: (state) => ({
         authenticated: state.authenticated,
         // Add any other state you want to persist
       }),

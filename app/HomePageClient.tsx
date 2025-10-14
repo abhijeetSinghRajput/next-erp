@@ -17,39 +17,44 @@ const HomePageClient = () => {
   const { checkAuth, checkingAuth, authenticated } = useAuthStore();
   const { isOnline, isOffline } = useOnlineStatus();
   const router = useRouter();
-  const [isChecking, setIsChecking] = useState(true);
+  const [initializing, setInitializing] = useState(true); // handles first check only
 
   useEffect(() => {
-    if (isOnline) {
-      const verifyAuth = async () => {
-        setIsChecking(true);
-        await checkAuth();
-        setIsChecking(false);
-      };
-      verifyAuth();
-    } else {
-      setIsChecking(false);
-    }
+    const verifyAuth = async () => {
+      if (!isOnline) {
+        setInitializing(false);
+        return;
+      }
+
+      setInitializing(true);
+      await checkAuth();
+      setInitializing(false);
+    };
+
+    verifyAuth();
   }, [isOnline, checkAuth]);
 
-  // redirect if not authenticated after checking
+  // 🚀 Redirect immediately after auth check
   useEffect(() => {
-    if (!isChecking && !checkingAuth && authenticated === false) {
+    if (!initializing && !checkingAuth && authenticated === false) {
       router.replace("/login");
     }
-  }, [isChecking, checkingAuth, authenticated, router]);
+  }, [initializing, checkingAuth, authenticated, router]);
 
-  if (isOffline) {
-    return <NoInternet />;
-  }
+  // 🧭 Offline state
+  if (isOffline) return <NoInternet />;
 
-  if (isChecking || checkingAuth) {
+  // ⏳ Show loader immediately on mount and while checking auth
+  if (initializing || checkingAuth) {
     return (
       <div className="flex items-center justify-center h-screen">
         <Mirage size={70} speed={2.5} color="var(--foreground)" />
       </div>
     );
   }
+
+  // 🧑‍🎓 Show homepage only after confirmed authentication
+  if (!authenticated) return null;
 
   return (
     <div>

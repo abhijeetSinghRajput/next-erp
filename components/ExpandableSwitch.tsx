@@ -6,10 +6,11 @@ import { GraduationCap, TreePine } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useAuthStore } from "../stores/useAuthStore";
 import { useCookieStore } from "../stores/useCookieStore";
+import Image from "next/image";
 
 const campus = [
-  { name: "Deemed", value: "deemed", icon: GraduationCap },
-  { name: "Hill", value: "hill", icon: TreePine },
+  { name: "Deemed", value: "deemed", icon: "/D.svg" },
+  { name: "Hill", value: "hill", icon: "H.svg" },
 ];
 
 const ExpandableSwitch = () => {
@@ -19,7 +20,7 @@ const ExpandableSwitch = () => {
 
   // Call captcha only when user switches (not on first render)
   useEffect(() => {
-    if(firstRender.current){
+    if (firstRender.current) {
       firstRender.current = false;
       return;
     }
@@ -29,7 +30,7 @@ const ExpandableSwitch = () => {
   return (
     <div className="w-full max-w-md">
       <div className="flex gap-2 rounded-xl p-1 border bg-muted/50">
-        {campus.map(({ icon: Icon, name, value }) => {
+        {campus.map(({ icon, name, value }) => {
           const isActive = activeCampus === value;
           return (
             <motion.div
@@ -50,7 +51,7 @@ const ExpandableSwitch = () => {
                 exit={{ filter: "blur(2px)" }}
                 transition={{ duration: 0.25, ease: "easeOut" }}
               >
-                <Icon className="aspect-square size-4 flex-shrink-0" />
+                <Image src={icon} alt="icon" height={32} width={32} />
                 <AnimatePresence initial={false}>
                   {isActive && (
                     <motion.span

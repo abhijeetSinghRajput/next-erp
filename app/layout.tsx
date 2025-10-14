@@ -1,4 +1,6 @@
 import "./globals.css";
+import 'ldrs/react/Ring.css';
+import 'ldrs/react/Mirage.css';
 import { ThemeProvider } from "@/components/theme-provider";
 import { Toaster } from "@/components/ui/sonner";
 import { generateMetadata as createMetadata } from "@/lib/metadata";

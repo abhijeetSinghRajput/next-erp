@@ -8,6 +8,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { cn, validateLoginForm } from "@/lib/utils";
 import { useAuthStore } from "@/stores/useAuthStore";
 import {
+  AlertCircle,
   ExternalLink,
   Eye,
   EyeOff,
@@ -22,6 +23,7 @@ import { Ring } from "ldrs/react";
 import ExpandableSwitch from "@/components/ExpandableSwitch";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { useRouter } from "next/navigation";
+import { Alert, AlertTitle } from "@/components/ui/alert";
 
 interface LoginProps {
   className?: string;
@@ -29,7 +31,7 @@ interface LoginProps {
 const LoginClient = ({ className, ...props }: LoginProps) => {
   const router = useRouter();
   const [showPassword, setShowPassword] = useState(false);
-  const { captchaImage, loadingCaptcha, getCaptcha, loggingIn, login } =
+  const { captchaImage, loadingCaptcha, getCaptcha, loggingIn, login, error } =
     useAuthStore();
 
   const [formData, setFormData] = useState({
@@ -62,7 +64,15 @@ const LoginClient = ({ className, ...props }: LoginProps) => {
 
     if (!validateLoginForm(formData, setErrors)) return;
     const result = await login(formData);
-    if (result) router.replace("/");
+    if (result){ 
+      router.replace("/");
+    }
+    else{
+      setFormData(prev=>({
+        ...prev,
+        captcha: '',
+      }))
+    }
   };
 
   return (
@@ -89,6 +99,13 @@ const LoginClient = ({ className, ...props }: LoginProps) => {
                   <ExpandableSwitch />
                 </div>
               </div>
+
+              {(error.login || error.getCaptcha) && (
+                <Alert variant="destructive" className="w-max mx-auto bg-destructive/10 border-destructive">
+                  <AlertCircle/>
+                  <AlertTitle className={undefined}>{error.login || error.getCaptcha}</AlertTitle>
+                </Alert>
+              )}
 
               <div className="flex flex-col gap-4">
                 {/* Student ID Field */}
