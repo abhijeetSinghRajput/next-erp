@@ -6,10 +6,7 @@ import {
   FileText,
   Lock,
   LogOut,
-  Moon,
   Settings,
-  Sun,
-  User2,
   UserRoundSearch,
 } from "lucide-react";
 import { useAuthStore } from "@/stores/useAuthStore";

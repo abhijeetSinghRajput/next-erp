@@ -18,7 +18,7 @@ const ProfileError = ({
   return (
     <div className="max-w-screen-lg mx-auto px-2 sm:px-4 md:px-6 py-2">
       <Card className="relative overflow-hidden bg-destructive/10">
-        <div className="absolute inset-0 bg-background/70 flex items-center justify-center">
+        <div className="absolute inset-0 bg-background/70 flex items-center justify-center m-0 p-4">
           <div className="text-center space-y-4">
             <AlertTriangle className="h-12 w-12 mx-auto text-destructive" />
             <h3 className="text-2xl font-medium text-destructive">{heading}</h3>

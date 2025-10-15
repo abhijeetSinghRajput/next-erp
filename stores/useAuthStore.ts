@@ -63,6 +63,7 @@ export const useAuthStore = create<AuthState>()(
         set({ checkingAuth: true });
         try {
           const res = await axiosInstance.get("/auth/check-auth");
+          console.log(res.data)
           if (res?.data?.authenticated === undefined) {
             throw new Error("Invalid auth response");
           }
@@ -71,10 +72,11 @@ export const useAuthStore = create<AuthState>()(
             error: { ...get().error, checkAuth: null },
           });
         } catch (error) {
-          // const msg = handleAxiosError(error, "Failed to verify session");
-          // set({
-          //   error: { ...get().error, checkAuth: msg },
-          // });
+          const msg = handleAxiosError(error, "Failed to verify session");
+          set({
+            authenticated: false,
+            error: { ...get().error, checkAuth: msg },
+          });
         } finally {
           set({ checkingAuth: false });
         }

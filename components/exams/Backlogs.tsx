@@ -129,10 +129,10 @@ const Backlogs: React.FC<BacklogsProps> = ({ backlogs }) => {
             {loadingBacklogs ? (
               <Ring size={32} speed={1.5} stroke={4} color="var(--primary)" />
             ) : errors.getBacklogs || !Array.isArray(backlogs) ? (
-              <div className="text-center space-y-4">
+              <div className="text-center space-y-4 p-4">
                 <AlertTriangle className="h-12 w-12 mx-auto text-destructive" />
                 <h3 className="text-2xl font-medium text-destructive">
-                  Failed to load Backlogs'
+                  
                 </h3>
                 <p className="text-destructive max-w-md">
                   {errors.getBacklogs}

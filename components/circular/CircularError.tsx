@@ -23,7 +23,7 @@ const CircularError: React.FC<CircularErrorProps> = ({
       <h2 className="text-2xl sm:text-3xl font-bold mb-2">Notices</h2>
 
       <div className="space-y-4 relative">
-        <div className="absolute inset-0 bg-background/70 flex items-center justify-center m-0">
+        <div className="absolute inset-0 bg-background/70 flex items-center justify-center m-0 p-4">
           <div className="text-center space-y-4">
             <AlertTriangle className="h-12 w-12 mx-auto text-destructive" />
             <h3 className="text-2xl font-medium text-destructive">{heading}</h3>
