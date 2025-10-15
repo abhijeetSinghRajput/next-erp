@@ -53,6 +53,7 @@ export function StudentProfile() {
   if (errors.fetchProfile || !student) {
     return (
       <ProfileError
+        heading="Failed to load Profile"
         description={errors.fetchProfile ?? undefined}
         onReload={fetchProfile}
       />

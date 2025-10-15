@@ -55,6 +55,7 @@ const FeeReceipts: React.FC<FeeReceiptsProps> = ({ data }) => {
   if (errors.getFeeReceipts || !Array.isArray(data)) {
     return (
       <TableError
+        heading="Failed to load Fees Receipts"
         className={"px-0 sm:px-0 md:px-0"}
         description={errors.getFeeReceipts || undefined}
         onReload={getFeeReceipts}

@@ -39,7 +39,7 @@ interface CourseFeeProps {
 }
 
 const CourseFee: React.FC<CourseFeeProps> = ({ data, totals, columns }) => {
-  const { getFeeSubmissions, errors, loadingFeeSubmissions} = useFeeStore();
+  const { getFeeSubmissions, errors, loadingFeeSubmissions } = useFeeStore();
   const [visibleColumns, setVisibleColumns] = useState<Record<string, boolean>>(
     {
       FeeHead: true,
@@ -58,6 +58,7 @@ const CourseFee: React.FC<CourseFeeProps> = ({ data, totals, columns }) => {
   if (errors.getFeeSubmissions || !Array.isArray(data)) {
     return (
       <TableError
+        heading="Failed to load Fees"
         className={"px-0 sm:px-0 md:px-0"}
         description={errors.getFeeSubmissions || undefined}
         onReload={getFeeSubmissions}

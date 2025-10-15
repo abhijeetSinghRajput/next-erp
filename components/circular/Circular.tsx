@@ -69,6 +69,7 @@ const Circular: React.FC = () => {
   if (errors.getCirculars || !circulars) {
     return (
       <CircularError
+        heading="Failed to load Circulars"
         description={errors.getCirculars}
         onReload={getCirculars}
       />

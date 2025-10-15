@@ -21,7 +21,7 @@ const ProfileError = ({
         <div className="absolute inset-0 bg-background/70 flex items-center justify-center">
           <div className="text-center space-y-4">
             <AlertTriangle className="h-12 w-12 mx-auto text-destructive" />
-            <h3 className="text-3xl font-medium text-destructive">{heading}</h3>
+            <h3 className="text-2xl font-medium text-destructive">{heading}</h3>
             <p className="max-w-[380px] text-destructive">
               {description}
             </p>

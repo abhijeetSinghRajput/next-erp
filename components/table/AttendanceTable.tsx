@@ -88,7 +88,7 @@ const AttendanceTable = () => {
       <div className="max-w-screen-lg mx-auto px-2 sm:px-4 md:px-6 py-2 mt-6">
         <h2 className="text-2xl sm:text-3xl font-bold mb-2">Attendance</h2>
         <TableError
-          heading="Attendance"
+          heading="Failed to load Attendance"
           className={"p-0 sm:p-0 md:p-0"}
           description={errors.getAllAttendanceSubjects || undefined}
           onReload={() => {

@@ -22,18 +22,6 @@ const ExamSummary: React.FC = () => {
     getBacklogs();
   }, [getExamSummary, getBacklogs]);
 
-  if (loadingExamSummary) {
-    return <ExamSkeleton />;
-  }
-
-  if (errors.getExamSummary || !Array.isArray(examSummary)) {
-    return (
-      <ExamError
-        description={errors.getExamSummary || undefined}
-        onReload={getExamSummary}
-      />
-    );
-  }
   
   return (
     <div className="max-w-screen-lg mx-auto px-2 sm:px-4 md:px-6 py-2">

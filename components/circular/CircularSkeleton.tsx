@@ -19,15 +19,15 @@ const CircularSkeleton: React.FC<CircularSkeletonProps> = ({ className }) => {
 
       <div className="space-y-4">
         {[...Array(3)].map((_, idx) => (
-          <Card key={idx} className="w-full rounded-3xl shadow-lg">
-            <CardHeader className="flex pb-4 gap-2 flex-row items-start">
+          <Card key={idx} className="w-full rounded-3xl shadow-lg gap-0">
+            <CardHeader className="flex p-6 pb-4 gap-2 flex-row items-start">
               <Skeleton className="aspect-square size-14 rounded-2xl"></Skeleton>
               <div className="space-y-1 w-full">
                 <Skeleton className="h-7 max-w-[280px]" />
                 <Skeleton className={"h-5 max-w-[150px]"} />
               </div>
             </CardHeader>
-            <CardContent className="space-y-1">
+            <CardContent className={"p-6 pt-0 space-y-1"}>
               <Skeleton className={"h-5 w-full"} />
               <Skeleton className={"h-5 max-w-28"} />
             </CardContent>

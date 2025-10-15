@@ -33,6 +33,7 @@ export interface AdmitCardData {
 interface ExamState {
   examSummary: ExamSummaryItem[];
   backlogs: BacklogItem[];
+  loadingBacklogs: boolean;
   loadingExamSummary: boolean;
   loadingMarksheet: string | null;
   loadingAdmitCard: ExamType | false;
@@ -54,6 +55,7 @@ interface ExamState {
 export const useExamStore = create<ExamState>((set, get) => ({
   examSummary: [],
   backlogs: [],
+  loadingBacklogs: false,
   loadingExamSummary: false,
   loadingMarksheet: null,
   loadingAdmitCard: false,
@@ -90,7 +92,7 @@ export const useExamStore = create<ExamState>((set, get) => ({
   },
 
   getBacklogs: async () => {
-    set({ errors: { ...get().errors, getBacklogs: null } });
+    set({loadingBacklogs: true, errors: { ...get().errors, getBacklogs: null } });
     try {
       const res = await axiosInstance.get<BacklogItem[]>("/exam/backlogs");
       set({ backlogs: res.data });
@@ -101,6 +103,8 @@ export const useExamStore = create<ExamState>((set, get) => ({
         "Something went wrong while fetching backlogs";
       set({ errors: { ...get().errors, getBacklogs: message } });
       toast.error(message);
+    } finally{
+      set({loadingBacklogs: false});
     }
   },
 

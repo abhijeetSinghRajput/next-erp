@@ -1,6 +1,13 @@
 import React, { useState } from "react";
 import DataTable from "@/components/table/DataTable";
-import { ChevronDown, ClipboardCheck, InfoIcon, Smile } from "lucide-react";
+import {
+  AlertTriangle,
+  ChevronDown,
+  ClipboardCheck,
+  InfoIcon,
+  RefreshCw,
+  Smile,
+} from "lucide-react";
 import {
   Card,
   CardContent,
@@ -16,6 +23,8 @@ import {
   DropdownMenuTrigger,
 } from "../ui/dropdown-menu";
 import { Button } from "../ui/button";
+import { useExamStore } from "@/stores/useExamStore";
+import { Ring } from "ldrs/react";
 
 type Backlog = {
   SubjectCode: string;
@@ -29,12 +38,12 @@ interface BacklogsProps {
   backlogs?: Backlog[];
 }
 
-
 const Backlogs: React.FC<BacklogsProps> = ({ backlogs }) => {
   // Ensure backlogs is an array and provide default value
+  const { errors, getBacklogs, loadingBacklogs } = useExamStore();
   const safeBacklogs = Array.isArray(backlogs) ? backlogs : [];
-  
-  const processedBacklogs = safeBacklogs.map((log : Backlog) => ({
+
+  const processedBacklogs = safeBacklogs.map((log: Backlog) => ({
     ...log,
     PaperType: log.SubjectCode.startsWith("TMC") ? "Theory" : "Lab",
   }));
@@ -69,7 +78,10 @@ const Backlogs: React.FC<BacklogsProps> = ({ backlogs }) => {
           <div className="space-y-2">
             <CardTitle className={""}>Backlog Details</CardTitle>
             <CardDescription className="flex gap-2">
-              <Badge className={""} variant="destructive">{`${processedBacklogs.length} Backlogs`}</Badge>
+              <Badge
+                className={""}
+                variant="destructive"
+              >{`${processedBacklogs.length} Backlogs`}</Badge>
               that need to be cleared
             </CardDescription>
           </div>
@@ -114,12 +126,36 @@ const Backlogs: React.FC<BacklogsProps> = ({ backlogs }) => {
           </div>
         ) : (
           <div className="flex h-[60vh] flex-col items-center justify-center py-12">
-
-            <ClipboardCheck className="w-12 h-12 text-muted-foreground mb-4" />
-            <h3 className="text-lg font-medium mb-1">No Backlogs Found</h3>
-            <p className="text-muted-foreground text-center max-w-md">
-              You have cleared all your subjects. Great job!
-            </p>
+            {loadingBacklogs ? (
+              <Ring size={32} speed={1.5} stroke={4} color="var(--primary)" />
+            ) : errors.getBacklogs || !Array.isArray(backlogs) ? (
+              <div className="text-center space-y-4">
+                <AlertTriangle className="h-12 w-12 mx-auto text-destructive" />
+                <h3 className="text-2xl font-medium text-destructive">
+                  Failed to load Backlogs'
+                </h3>
+                <p className="text-destructive max-w-md">
+                  {errors.getBacklogs}
+                </p>
+                <Button
+                  variant={""}
+                  size={""}
+                  onClick={getBacklogs}
+                  className="mt-4 gap-2"
+                >
+                  <RefreshCw />
+                  Retry
+                </Button>
+              </div>
+            ) : (
+              <div>
+                <ClipboardCheck className="w-12 h-12 text-muted-foreground mb-4" />
+                <h3 className="text-lg font-medium mb-1">No Backlogs Found</h3>
+                <p className="text-muted-foreground text-center max-w-md">
+                  You have cleared all your subjects. Great job!
+                </p>
+              </div>
+            )}
           </div>
         )}
       </CardContent>

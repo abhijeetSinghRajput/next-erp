@@ -7,14 +7,22 @@ import { Button } from "../ui/button";
 import TooltipWrapper from "../TooltipWrapper";
 import { useExamStore, type ExamSummaryItem } from "../../stores/useExamStore";
 import { Ring } from "ldrs/react";
+import ExamError from "./ExamError";
 
 interface ResultProps {
   examSummary: ExamSummaryItem[];
 }
 
 const Result: React.FC<ResultProps> = ({ examSummary }) => {
-  const { loadingMarksheet, downloadMarksheet } = useExamStore();
-
+  const { loadingMarksheet, downloadMarksheet, errors, getExamSummary } = useExamStore();
+  if (errors.getExamSummary || !Array.isArray(examSummary)) {
+    return (
+      <ExamError
+        description={errors.getExamSummary || undefined}
+        onReload={getExamSummary}
+      />
+    );
+  }
   return (
     <motion.div
       initial={{ opacity: 0 }}
