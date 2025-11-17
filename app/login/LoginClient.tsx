@@ -192,7 +192,7 @@ const LoginClient = ({ className, ...props }: LoginProps) => {
                   {loadingCaptcha ? (
                     <Skeleton className={"h-14 rounded-none"} />
                   ) : (
-                    <Avatar className="h-14 rounded-none border w-full bg-white mx-auto">
+                    <Avatar className="h-14 rounded-none border w-full bg-white mx-auto border-none">
                       <AvatarImage
                         className="w-full h-full object-contain"
                         src={captchaImage}
@@ -268,11 +268,11 @@ const LoginClient = ({ className, ...props }: LoginProps) => {
               Privacy Policy
             </Link>
           </div>
-          <blockquote className="text-sm text-destructive bg-destructive/10 border-destructive border-l-2 p-2 rounded-md overflow-hidden border-accent pl-4 italic">
+          {/* <blockquote className="text-sm text-destructive bg-destructive/10 border-destructive border-l-2 p-2 rounded-md overflow-hidden border-accent pl-4 italic">
             GEU ERP updated its login with <strong>OTP Verfication</strong>. So this portal is <strong>temporarily paused</strong> while we adapt to the new system.
-          </blockquote>
+          </blockquote> */}
 
-          {/* <blockquote className="text-sm text-muted-foreground bg-input/30 border-l-2 p-2 rounded-md overflow-hidden border-accent pl-4 italic">
+          <blockquote className="text-sm text-muted-foreground bg-input/30 border-l-2 p-2 rounded-md overflow-hidden border-accent pl-4 italic">
             “The portal does not store any credentials and is fully open-source.
             You can verify our security practices by reviewing the source code.”
             <a
@@ -283,7 +283,7 @@ const LoginClient = ({ className, ...props }: LoginProps) => {
               github
               <ExternalLink size={14} />
             </a>
-          </blockquote> */}
+          </blockquote>
         </div>
       </div>
     </div>

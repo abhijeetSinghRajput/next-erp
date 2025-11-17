@@ -63,7 +63,6 @@ export const useAuthStore = create<AuthState>()(
         set({ checkingAuth: true });
         try {
           const res = await axiosInstance.get("/auth/check-auth");
-          console.log(res.data)
           if (res?.data?.authenticated === undefined) {
             throw new Error("Invalid auth response");
           }

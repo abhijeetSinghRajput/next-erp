@@ -1,10 +1,10 @@
 import { errorMap } from "@/constants/errors";
-import { setCookies } from "@/lib/cookies";
 import { extractLoginError } from "@/lib/errors";
+import { setCookies } from "@/lib/cookies";
 import axios from "axios";
 import { wrapper } from "axios-cookiejar-support";
-import { NextRequest, NextResponse } from "next/server";
 import { CookieJar } from "tough-cookie";
+import { NextRequest, NextResponse } from "next/server";
 
 interface LoginFormData {
   studentId: string;
@@ -19,9 +19,12 @@ export async function POST(req: NextRequest) {
     const { studentId, password, captcha, formToken } = body;
 
     const sessionId = req.cookies.get("ASP.NET_SessionId")?.value;
-    const cookieToken = req.cookies.get("__RequestVerificationToken")?.value;
+    const cookieToken =
+      req.cookies.get("__RequestVerificationToken")?.value;
+
     const BASE_URL = req.headers.get("x-base-url");
 
+    // ✔ Same validation as Node.js version
     if (
       !studentId ||
       !password ||
@@ -36,6 +39,7 @@ export async function POST(req: NextRequest) {
       );
     }
 
+    // ✔ Prepare form data (same as Node.js)
     const formData = new URLSearchParams();
     formData.append("hdnMsg", "GEU");
     formData.append("checkOnline", "0");
@@ -45,6 +49,7 @@ export async function POST(req: NextRequest) {
     formData.append("clientIP", "");
     formData.append("captcha", captcha);
 
+    // ✔ Prepare axios with cookies
     const jar = new CookieJar();
     const client = wrapper(
       axios.create({
@@ -60,6 +65,7 @@ export async function POST(req: NextRequest) {
       );
     }
 
+    // ✔ Send login request
     const response = await client.post(BASE_URL, formData, {
       maxRedirects: 0,
       validateStatus: (status) => status >= 200 && status < 400,
@@ -71,6 +77,7 @@ export async function POST(req: NextRequest) {
       },
     });
 
+    // ✔ Check success (same as Node.js)
     const isSuccess =
       response.status === 302 &&
       response.headers.location === "/Account/Cyborg_StudentMenu";
@@ -80,16 +87,19 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ message: errorMsg }, { status: 401 });
     }
 
+    // ✔ Set cookies on client
     const setCookiesHeader = response.headers["set-cookie"] || [];
     const nextRes = NextResponse.json({ message: "✅ Login successful" });
 
+    // Uses your custom cookie setter
     setCookies(nextRes, setCookiesHeader);
+
     return nextRes;
   } catch (error: any) {
     return NextResponse.json(
       {
         message:
-          errorMap[error?.code as string] ||
+          errorMap[error?.code] ||
           "Something went wrong during login",
       },
       { status: 500 }
