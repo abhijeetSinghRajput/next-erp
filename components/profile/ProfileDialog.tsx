@@ -19,7 +19,7 @@ import Image from "next/image";
 
 const ProfileDialog = () => {
   const { student } = useStudentStore();
-  const { idCard, loadingIdCard, getIdCard } = useStudentStore();
+  const { idCard, loadingIdCard, getIdCard, loadingAvatar } = useStudentStore();
 
   useEffect(() => {
     getIdCard();
@@ -33,7 +33,7 @@ const ProfileDialog = () => {
       }}
     >
       <MorphingDialogTrigger>
-        {loadingIdCard ? (
+        {loadingIdCard || loadingAvatar ? (
           <div className="rounded-full overflow-hidden animate-pulse">
             <Image
               src="/avatar.svg"

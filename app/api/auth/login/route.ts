@@ -19,19 +19,18 @@ export async function POST(req: NextRequest) {
     const { studentId, password, captcha, formToken } = body;
 
     const sessionId = req.cookies.get("ASP.NET_SessionId")?.value;
-    const cookieToken =
-      req.cookies.get("__RequestVerificationToken")?.value;
-
+    const cookieToken = req.cookies.get("__RequestVerificationToken")?.value;
     const BASE_URL = req.headers.get("x-base-url");
 
-    // ✔ Same validation as Node.js version
+    // ✅ Validation
     if (
       !studentId ||
       !password ||
       !captcha ||
       !formToken ||
       !sessionId ||
-      !cookieToken
+      !cookieToken ||
+      !BASE_URL
     ) {
       return NextResponse.json(
         { message: "Missing credentials or tokens" },
@@ -39,7 +38,7 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    // ✔ Prepare form data (same as Node.js)
+    // ✅ Prepare form data
     const formData = new URLSearchParams();
     formData.append("hdnMsg", "GEU");
     formData.append("checkOnline", "0");
@@ -49,60 +48,60 @@ export async function POST(req: NextRequest) {
     formData.append("clientIP", "");
     formData.append("captcha", captcha);
 
-    // ✔ Prepare axios with cookies
-    const jar = new CookieJar();
-    const client = wrapper(
-      axios.create({
-        jar,
-        withCredentials: true,
-      })
-    );
-
-    if (!BASE_URL) {
-      return NextResponse.json(
-        { message: "Missing x-base-url header" },
-        { status: 400 }
-      );
-    }
-
-    // ✔ Send login request
-    const response = await client.post(BASE_URL, formData, {
+    // ✅ Send login request WITHOUT jar (plain axios)
+    const response = await axios.post(BASE_URL, formData.toString(), {
       maxRedirects: 0,
       validateStatus: (status) => status >= 200 && status < 400,
       headers: {
         "Content-Type": "application/x-www-form-urlencoded",
-        Referer: BASE_URL,
-        Origin: BASE_URL,
-        Cookie: `ASP.NET_SessionId=${sessionId}; __RequestVerificationToken=${cookieToken}`,
+        "Referer": BASE_URL,
+        "Origin": BASE_URL,
+        "Cookie": `ASP.NET_SessionId=${sessionId}; __RequestVerificationToken=${cookieToken}`,
       },
     });
 
-    // ✔ Check success (same as Node.js)
+    const redirectLocation = response.headers.location || response.headers.Location;
+    const setCookiesHeader = response.headers["set-cookie"] || [];
+
+    console.log({
+      status: response.status,
+      location: redirectLocation,
+      hasCookies: setCookiesHeader.length > 0,
+    });
+
+    // ✅ Check success: 302 redirect + new cookies + not redirecting to login
     const isSuccess =
       response.status === 302 &&
-      response.headers.location === "/Account/Cyborg_StudentMenu";
+      setCookiesHeader.length > 0 &&
+      redirectLocation &&
+      redirectLocation !== "/" &&
+      !redirectLocation.toLowerCase().includes("login");
 
     if (!isSuccess) {
       const errorMsg = extractLoginError(response.data);
-      return NextResponse.json({ message: errorMsg }, { status: 401 });
+      return NextResponse.json(
+        { message: errorMsg || "Invalid credentials or captcha" },
+        { status: 401 }
+      );
     }
 
-    // ✔ Set cookies on client
-    const setCookiesHeader = response.headers["set-cookie"] || [];
-    const nextRes = NextResponse.json({ message: "✅ Login successful" });
+    // ✅ Set new authentication cookies on client
+    const nextRes = NextResponse.json({
+      message: "✅ Login successful",
+      redirectTo: redirectLocation,
+    });
 
-    // Uses your custom cookie setter
     setCookies(nextRes, setCookiesHeader);
 
     return nextRes;
   } catch (error: any) {
+    console.error("Login error:", error.message);
     return NextResponse.json(
       {
         message:
-          errorMap[error?.code] ||
-          "Something went wrong during login",
+          errorMap[error?.code] || "Something went wrong during login",
       },
-      { status: 500 }
+      { status: error.response?.status || 500 }
     );
   }
 }
